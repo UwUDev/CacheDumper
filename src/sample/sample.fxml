@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #2E3440;">
+         <children>
+            <TextField layoutX="350.0" layoutY="287.0" prefHeight="37.0" prefWidth="581.0" style="-fx-background-color: #434C5E; -fx-text-inner-color: #ffffff;" text="\%appdata%\CacheDump">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <Label layoutX="411.0" layoutY="62.0" prefHeight="105.0" prefWidth="459.0" text="Cache Dumper" textFill="WHITE">
+               <font>
+                  <Font size="70.0" />
+               </font>
+            </Label>
+            <Label layoutX="611.0" layoutY="248.0" prefHeight="19.0" prefWidth="59.0" text="Export to.." textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <CheckBox layoutX="375.0" layoutY="386.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".png" textFill="WHITE" />
+            <CheckBox layoutX="611.0" layoutY="386.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".jpg" textFill="WHITE" />
+            <CheckBox layoutX="835.0" layoutY="386.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".png" textFill="WHITE" />
+            <CheckBox layoutX="375.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".gif" textFill="WHITE" />
+            <CheckBox layoutX="611.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".webm" textFill="WHITE" />
+            <CheckBox layoutX="835.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="other" textFill="WHITE" />
+            <Button layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #A3BE8C;" text="DUMP !">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button layoutX="383.0" layoutY="599.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #BF616A;" text="Clear cache">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="ttt" />
+         </children>
+      </Pane>
+   </children>
+</GridPane>
