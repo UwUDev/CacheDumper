@@ -1,4 +1,4 @@
-package sample;
+package me.uwu;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,14 +10,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("uwu.fxml"));
         primaryStage.setTitle("Cache Dumper by UwU#0001");
 
         primaryStage.setScene(new Scene(root, 1270, 710));
         primaryStage.show();
         primaryStage.resizableProperty().set(false);
 
-        
+
 
     }
 

@@ -1,4 +1,4 @@
-package sample;
+package me.uwu;
 
 public class Controller {
 }
