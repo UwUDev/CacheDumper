@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="me.uwu.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="me.uwu.controllers.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -42,7 +42,7 @@
             <CheckBox layoutX="375.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".gif" textFill="WHITE" />
             <CheckBox layoutX="611.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text=".webm" textFill="WHITE" />
             <CheckBox layoutX="835.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="other" textFill="WHITE" />
-            <Button layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #A3BE8C;" text="DUMP !">
+            <Button onAction="#dumpThis" fx:id="dump" layoutX="383.0" layoutY="504.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #A3BE8C;" text="DUMP !">
                <font>
                   <Font size="25.0" />
                </font>
