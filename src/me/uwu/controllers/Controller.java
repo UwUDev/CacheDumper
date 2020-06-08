@@ -44,6 +44,20 @@ public class Controller {
             if (FileInfo.isPNG(fo.getAbsolutePath())) {
                 System.out.println("C'est un png");
                 FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/png/"+fo.getName()+".png");
+                FastDelete.file(fo.getAbsolutePath());
+            } else {
+                System.out.println("nope");
+            }
+        }
+
+        for(File fo : files) {
+
+            //System.out.println(fo.getName());
+
+            if (FileInfo.isJPG(fo.getAbsolutePath())) {
+                System.out.println("C'est un jpg");
+                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/jpg/"+fo.getName()+".jpg");
+                FastDelete.file(fo.getAbsolutePath());
             } else {
                 System.out.println("nope");
             }
