@@ -63,5 +63,18 @@ public class Controller {
             }
         }
 
+        for(File fo : files) {
+
+            //System.out.println(fo.getName());
+
+            if (FileInfo.isGIF(fo.getAbsolutePath())) {
+                System.out.println("C'est un gif");
+                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/gif/"+fo.getName()+".gif");
+                FastDelete.file(fo.getAbsolutePath());
+            } else {
+                System.out.println("nope");
+            }
+        }
+
     }
 }
