@@ -31,6 +31,8 @@ public class Controller {
 
         System.out.println("\u001B[34m" + "Copy cache" + "\u001B[0m");
         FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
+        FastCopy.folder(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE",tempPath);
+
 
         System.out.println("\u001B[34m" + "Filter cache copy" + "\u001B[0m");
         for(int oof = 0; oof <=4;oof++){
@@ -43,6 +45,39 @@ public class Controller {
 
 
         for(File fo : files) {
+
+            if (fo.getName().contains(".png")) {
+                System.out.println("C'est un png");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+            } else
+
+            if (fo.getName().contains(".jpg")) {
+                System.out.println("C'est un jpg");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+            } else
+
+            if (fo.getName().contains(".gif")) {
+                System.out.println("C'est un gif");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+            } else
+
+            if (fo.getName().contains(".webm")) {
+                System.out.println("C'est un webm");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+            } else
+
+            if (fo.getName().contains(".mp4")) {
+                System.out.println("C'est un mp4");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+            } else
+
+
+
 
             if (FileInfo.isPNG(fo.getAbsolutePath())) {
                 System.out.println("C'est un png");
