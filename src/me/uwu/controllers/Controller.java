@@ -20,69 +20,67 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
+
+    private String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
+
     @FXML protected void dumpThis(ActionEvent event) throws IOException {
         System.out.println("\u001B[32m" + "Started DUUUUUUMPING boi !" + "\u001B[0m");
 
         System.out.println("\u001B[34m" + "Cleaning temp files" + "\u001B[0m");
-        FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles");
+        FastDelete.folder(tempPath);
 
         System.out.println("\u001B[34m" + "Copy cache" + "\u001B[0m");
-        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",System.getenv("APPDATA")+"/CacheDumper/tempfiles");
+        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
 
         System.out.println("\u001B[34m" + "Filter cache copy" + "\u001B[0m");
         for(int oof = 0; oof <=4;oof++){
-            FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/tempfiles/data_" + oof);
+            FastDelete.file(tempPath + "data_" + oof);
         }
+        FastDelete.file(tempPath +"/index");
 
-        File f = new File(System.getenv("APPDATA")+"/CacheDumper/tempfiles");
+        File f = new File(tempPath);
         ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 
 
         for(File fo : files) {
 
-            //System.out.println(fo.getName());
-
             if (FileInfo.isPNG(fo.getAbsolutePath())) {
                 System.out.println("C'est un png");
-                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/png/"+fo.getName()+".png");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName()+".png");
                 FastDelete.file(fo.getAbsolutePath());
-            } else {
-                System.out.println("nope");
-            }
-
-
-            //System.out.println(fo.getName());
+            } else
 
             if (FileInfo.isJPG(fo.getAbsolutePath())) {
                 System.out.println("C'est un jpg");
-                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/jpg/"+fo.getName()+".jpg");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName()+".jpg");
                 FastDelete.file(fo.getAbsolutePath());
-            } else {
-                System.out.println("nope");
-            }
-
-
-            //System.out.println(fo.getName());
+            } else
 
             if (FileInfo.isGIF(fo.getAbsolutePath())) {
                 System.out.println("C'est un gif");
-                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/gif/"+fo.getName()+".gif");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName()+".gif");
                 FastDelete.file(fo.getAbsolutePath());
-            } else {
-                System.out.println("nope");
-            }
+            } else
 
-
-            //System.out.println(fo.getName());
+            if (FileInfo.isWEBM(fo.getAbsolutePath())) {
+                System.out.println("C'est un webm");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName()+".webm");
+                FastDelete.file(fo.getAbsolutePath());
+            } else
 
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
                 System.out.println("C'est un mp4");
-                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/mp4/"+fo.getName()+".mp4");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
                 FastDelete.file(fo.getAbsolutePath());
             } else {
-                System.out.println("nope");
+                System.out.println("C'est un format inconnu :/");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"unknown/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
             }
 
         }
+
+        System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
+
     }
 }
