@@ -37,6 +37,7 @@ public class Controller {
         File f = new File(System.getenv("APPDATA")+"/CacheDumper/tempfiles");
         ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 
+
         for(File fo : files) {
 
             //System.out.println(fo.getName());
@@ -48,9 +49,7 @@ public class Controller {
             } else {
                 System.out.println("nope");
             }
-        }
 
-        for(File fo : files) {
 
             //System.out.println(fo.getName());
 
@@ -61,9 +60,7 @@ public class Controller {
             } else {
                 System.out.println("nope");
             }
-        }
 
-        for(File fo : files) {
 
             //System.out.println(fo.getName());
 
@@ -74,7 +71,18 @@ public class Controller {
             } else {
                 System.out.println("nope");
             }
-        }
 
+
+            //System.out.println(fo.getName());
+
+            if (FileInfo.isMP4(fo.getAbsolutePath())) {
+                System.out.println("C'est un mp4");
+                FastCopy.file(fo.getAbsolutePath(), System.getenv("APPDATA")+"/CacheDumper/tempfiles"+"/mp4/"+fo.getName()+".mp4");
+                FastDelete.file(fo.getAbsolutePath());
+            } else {
+                System.out.println("nope");
+            }
+
+        }
     }
 }
