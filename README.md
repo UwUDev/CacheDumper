@@ -47,4 +47,4 @@ And just run Cache_Dumper.jar
 * **UwU0001** - [GitHub](https://github.com/UwU0001)
 
 ## Contact
-[![Discord](https://img.shields.io/discord/606205735352795146.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/duyyyz3)
+[![Discord](https://img.shields.io/discord/463752820026376202.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/duyyyz3)
