@@ -47,4 +47,4 @@ And just run Cache_Dumper.jar
 * **UwU0001** - [GitHub](https://github.com/UwU0001)
 
 ## Contact
-[Discord Server](https://discord.gg/nH9t5sm)
+[![Discord](https://discordapp.com/api/guilds/606205735352795146/widget.png)](https://discord.gg/duyyyz3)
