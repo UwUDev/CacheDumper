@@ -1,10 +1,11 @@
 # Cache Dumper
 
-A simple app made in JavaFX to get all the images gif videos and more hidden in your discord storage
+A simple app made in JavaFX to get all the images gif videos and more hidden things in your discord storage
+*(Support messages loggers plugins logs files)*
 
 You can also filter what can of media you want to save and you can clean the cache (not recommanded)
 
-![alt text](https://i.imgur.com/kAUMQoq.png)
+![alt text](https://i.imgur.com/bsJ8NWe.png)
 
 ### Note : DON'T CLICK MULTIPLE TIMES ON THE DUMP BUTTON !!!
 
