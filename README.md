@@ -47,7 +47,5 @@ And just run Cache_Dumper.jar
 * **UwU0001** - [GitHub](https://github.com/UwU0001)
 
 ## Contact
-[!["Open Issues"](https://img.shields.io/github/issues-raw/codercom/code-server.svg)](https://github.com/codercom/code-server/issues)
-[!["Latest Release"](https://img.shields.io/github/release/codercom/code-server.svg)](https://github.com/codercom/code-server/releases/latest)
 [![Discord](https://discordapp.com/api/guilds/606205735352795146/widget.png)](https://discord.gg/duyyyz3)
-[![MIT license](https://img.shields.io/badge/license-MIT-green.svg)](#)
+[![MIT license](https://img.shields.io/badge/-Telegram-blue.svg)](https://t.me/UwUDev)
