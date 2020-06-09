@@ -3,27 +3,14 @@ package me.uwu.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import me.uwu.utils.FastCopy;
 import me.uwu.utils.FastDelete;
 import me.uwu.utils.FileInfo;
-import org.apache.commons.io.FileUtils;
-
 import java.awt.*;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CodingErrorAction;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Controller {
 

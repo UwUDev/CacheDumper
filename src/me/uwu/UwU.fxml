@@ -52,7 +52,6 @@
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="ttt" />
          </children>
       </Pane>
    </children>
