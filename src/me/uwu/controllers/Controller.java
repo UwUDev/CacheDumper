@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import me.uwu.utils.FastCopy;
 import me.uwu.utils.FastDelete;
 import me.uwu.utils.FileInfo;
+import org.apache.commons.io.FileUtils;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -16,6 +18,14 @@ public class Controller {
 
     public TextField path;
     private String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
+
+    private int png = 0;
+    private int jpg = 0;
+    private int gif = 0;
+    private int mp4 = 0;
+    private int webm = 0;
+    private int other = 0;
+    private int total = 0;
 
     @FXML
     private TextField userField;
@@ -60,30 +70,35 @@ public class Controller {
                 System.out.println("C'est un png");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                png++;
             } else
 
             if (fo.getName().contains(".jpg")) {
                 System.out.println("C'est un jpg");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                jpg++;
             } else
 
             if (fo.getName().contains(".gif")) {
                 System.out.println("C'est un gif");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                gif++;
             } else
 
             if (fo.getName().contains(".webm")) {
                 System.out.println("C'est un webm");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                webm++;
             } else
 
             if (fo.getName().contains(".mp4")) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                mp4++;
             } else
 
 
@@ -93,34 +108,40 @@ public class Controller {
                 System.out.println("C'est un png");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName()+".png");
                 FastDelete.file(fo.getAbsolutePath());
+                png++;
             } else
 
             if (FileInfo.isJPG(fo.getAbsolutePath())) {
                 System.out.println("C'est un jpg");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName()+".jpg");
                 FastDelete.file(fo.getAbsolutePath());
+                jpg++;
             } else
 
             if (FileInfo.isGIF(fo.getAbsolutePath())) {
                 System.out.println("C'est un gif");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName()+".gif");
                 FastDelete.file(fo.getAbsolutePath());
+                gif++;
             } else
 
             if (FileInfo.isWEBM(fo.getAbsolutePath())) {
                 System.out.println("C'est un webm");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName()+".webm");
                 FastDelete.file(fo.getAbsolutePath());
+                webm++;
             } else
 
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
                 FastDelete.file(fo.getAbsolutePath());
+                mp4++;
             } else {
                 System.out.println("C'est un format inconnu :/");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"unknown/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
+                other++;
             }
 
         }
@@ -130,6 +151,17 @@ public class Controller {
         FastDelete.folder(tempPath);
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
+
+        total = png + jpg + gif + webm + mp4 + other;
+
+        File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
+
+        try {
+            FileUtils.touch(stats);
+            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         Desktop.getDesktop().open(new File(finalPath+"/Cache Dumper"));
 

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="Cache Dumper">
+  <artifact type="javafx" build-on-make="true" name="Cache Dumper">
     <output-path>$PROJECT_DIR$/out/artifacts/Cache_Dumper</output-path>
     <properties id="javafx-properties">
       <options>
@@ -16,8 +16,8 @@
     <root id="root">
       <element id="archive" name="Cache_Dumper.jar">
         <element id="module-output" name="Cache Dumper" />
+        <element id="library" level="project" name="commons-io-2.7" />
       </element>
-      <element id="library" level="project" name="commons-io-2.7" />
     </root>
   </artifact>
 </component>
