@@ -21,7 +21,7 @@ Download Java 8 [Here](https://www.java.com/download/)
 
 First download the lastest release [Here](https://github.com/UwU0001/CacheDumper/releases/latest/download/Cache_Dumper.zip)
 
-Then if you use v1.3 or higher just run the jar but if you use v1.0 or v1.1 or v1.2 do this :
+Then if you use v1.3 or higher just run the jar but if you use v0.7 or v0.8 or v0.9 do this :
 
 Unzip the two files in the same filder like this
 
