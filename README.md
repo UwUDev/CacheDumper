@@ -44,7 +44,7 @@ And just run Cache_Dumper.jar
 
 ## Author
 
-* **UwU0001** - [GitHub](https://github.com/UwU0001)
+* **UwU#0001** - [GitHub](https://github.com/UwU0001)
 
 ## Contact
 [![Discord](https://discordapp.com/api/guilds/606205735352795146/widget.png)](https://discord.gg/duyyyz3)
