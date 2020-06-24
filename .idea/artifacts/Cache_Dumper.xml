@@ -16,7 +16,6 @@
     <root id="root">
       <element id="archive" name="Cache_Dumper.jar">
         <element id="module-output" name="Cache Dumper" />
-        <element id="library" level="project" name="commons-io-2.7" />
       </element>
     </root>
   </artifact>

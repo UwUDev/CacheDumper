@@ -31,6 +31,22 @@ public class Controller {
     private TextField userField;
 
     @FXML protected void dumpThis(ActionEvent event) throws IOException {
+
+        PrintStream baseOut = System.out;
+
+        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
+
+        File logs = new File(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
+
+        try {
+            FileUtils.touch(logs);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        PrintStream out = new PrintStream(new FileOutputStream(System.getenv("APPDATA")+"/CacheDumper/logs.txt"));
+        System.setOut(out);
+
         String finalPath;
         System.out.println(path.getText());
 
@@ -41,6 +57,7 @@ public class Controller {
         finalPath = finalPath.replace("%UserProfile%",System.getenv("UserProfile"));
 
         System.out.println(finalPath);
+
         System.out.println("\u001B[32m" + "Started DUUUUUUMPING boi !" + "\u001B[0m");
 
 
@@ -147,8 +164,11 @@ public class Controller {
         }
 
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
+        FastCopy.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt",finalPath+"/Cache Dumper/logs.txt");
+        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
         FastDelete.folder(tempPath);
+        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
 
@@ -164,6 +184,10 @@ public class Controller {
         }
 
         Desktop.getDesktop().open(new File(finalPath+"/Cache Dumper"));
+
+        System.setOut(baseOut);
+
+        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
         System.exit(-1);
 
