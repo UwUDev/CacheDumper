@@ -33,6 +33,10 @@ public class FileInfo {
         return isWhat(file,"ID3");
     }
 
+    public static boolean isGZ(String file) throws IOException {
+        return isWhat(file,"\u001F�\b");
+    }
+
     public static boolean isWhat(String file, String contains) throws IOException {
 
         FileInputStream inputStream = null;

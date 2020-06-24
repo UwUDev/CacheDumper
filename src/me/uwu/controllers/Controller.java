@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import me.uwu.utils.FastCopy;
 import me.uwu.utils.FastDelete;
 import me.uwu.utils.FileInfo;
+import me.uwu.utils.GZipUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
@@ -24,6 +25,7 @@ public class Controller {
     private int gif = 0;
     private int mp3 = 0;
     private int mp4 = 0;
+    private int gz = 0;
     private int webm = 0;
     private int other = 0;
     private int total = 0;
@@ -32,6 +34,11 @@ public class Controller {
     private TextField userField;
 
     @FXML protected void dumpThis(ActionEvent event) throws IOException {
+
+       /* String gzip_filepath = "C:\\temp\\test.gz";
+        String decopressed_filepath = "C:\\temp\\test2.txt";
+
+        GZipUtils.unGunzipFile(gzip_filepath, decopressed_filepath);*/
 
         PrintStream baseOut = System.out;
 
@@ -126,6 +133,13 @@ public class Controller {
                 mp4++;
             } else
 
+            if (fo.getName().contains(".gz")) {
+                System.out.println("C'est un gz");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"gz/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+                gz++;
+            } else
+
 
 
 
@@ -164,6 +178,13 @@ public class Controller {
                 mp3++;
             } else
 
+            if (FileInfo.isGZ(fo.getAbsolutePath())) {
+                System.out.println("C'est un gz");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"gz/"+fo.getName()+".gz");
+                FastDelete.file(fo.getAbsolutePath());
+                gz++;
+            } else
+
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
@@ -178,6 +199,26 @@ public class Controller {
 
         }
 
+        File gzf = new File(tempPath+"gz/");
+        File txtf = new File(tempPath+"txt/");
+        ArrayList<File> gzfiles = new ArrayList<File>(Arrays.asList(gzf.listFiles()));
+
+        FileUtils.forceMkdir(txtf);
+
+        int ty = 0;
+
+        for(File gz : gzfiles) {
+
+            GZipUtils.unGunzipFile(gz.getAbsolutePath(), tempPath+"txt/"+ty+".txt");
+            ty++;
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
         FastCopy.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt",finalPath+"/Cache Dumper/logs.txt");
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
@@ -187,13 +228,13 @@ public class Controller {
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
 
-        total = png + jpg + gif + webm + mp3 + mp4 + other;
+        total = png + jpg + gif + webm + mp3 + mp4 + gz + other;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
         try {
             FileUtils.touch(stats);
-            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm + "\nTotal .mp3 files : " + mp3 + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
+            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm + "\nTotal .mp3 files : " + mp3 + "\nTotal .gz files : " + gz + "\nTotal .txt files : " + gz + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
