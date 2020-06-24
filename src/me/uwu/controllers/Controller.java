@@ -22,6 +22,7 @@ public class Controller {
     private int png = 0;
     private int jpg = 0;
     private int gif = 0;
+    private int mp3 = 0;
     private int mp4 = 0;
     private int webm = 0;
     private int other = 0;
@@ -111,6 +112,13 @@ public class Controller {
                 webm++;
             } else
 
+            if (fo.getName().contains(".mp3")) {
+                System.out.println("C'est un mp3");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp3/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+                mp3++;
+            } else
+
             if (fo.getName().contains(".mp4")) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName());
@@ -149,6 +157,13 @@ public class Controller {
                 webm++;
             } else
 
+            if (FileInfo.isMP3(fo.getAbsolutePath())) {
+                System.out.println("C'est un mp3");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp3/"+fo.getName()+".mp3");
+                FastDelete.file(fo.getAbsolutePath());
+                mp3++;
+            } else
+
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
@@ -172,13 +187,13 @@ public class Controller {
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
 
-        total = png + jpg + gif + webm + mp4 + other;
+        total = png + jpg + gif + webm + mp3 + mp4 + other;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
         try {
             FileUtils.touch(stats);
-            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
+            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm + "\nTotal .mp3 files : " + mp3 + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
