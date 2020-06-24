@@ -19,9 +19,11 @@ Download Java 8 [Here](https://www.java.com/download/)
 
 ## Running
 
-First download the lastest release [Here](https://github.com/UwU0001/CacheDumper/releases/latest/download/Cache_Dumper.zip)
+First download the lastest release [Here](https://github.com/UwU0001/CacheDumper/releases/latest/download/Cache_Dumper.jar)
 
-Then, unzip the two files in the same filder like this
+Then if you use v1.0 or higher just run the jar but if you use v0.7 or v0.8 or v0.9 do this :
+
+Unzip the two files (of Cache_Dumper.zip) in the releases in the same filder like this
 
 ```
 Cache_Dumper
@@ -33,16 +35,18 @@ Cache_Dumper
 And just run Cache_Dumper.jar
 
 
-**/!\ Dont worry if the program doesn't respond it's just calculating if file is .png . gif etc...**
+**/!\ Dont worry if the program doesn't respond it's just checking if file is .png . gif etc...**
 
 ## Built With
 
 * [JavaFX](https://docs.oracle.com/javase/8/javafx/api/toc.html) - The web framework used to render
 * [Apache Commons IO ™](http://commons.apache.org/proper/commons-io/) - Dependency for files management
+* [Nord](https://github.com/arcticicestudio/nord) - Only for color palettes
 
 ## Author
 
-* **UwU0001** - [GitHub](https://github.com/UwU0001)
+* **UwU#0001** - [GitHub](https://github.com/UwU0001)
 
 ## Contact
-[![Discord](https://img.shields.io/discord/463752820026376202.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/duyyyz3)
+[![Discord](https://discordapp.com/api/guilds/606205735352795146/widget.png)](https://discord.gg/duyyyz3)
+[![MIT license](https://img.shields.io/badge/-Telegram-blue.svg)](https://t.me/UwUDev)
