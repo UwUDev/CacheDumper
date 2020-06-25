@@ -25,6 +25,10 @@ public class FileInfo {
         return isWhat(file,"webm");
     }
 
+    public static boolean isWEBP(String file) throws IOException {
+        return isWhat(file,"WEBP");
+    }
+
     public static boolean isMP4(String file) throws IOException {
         return isWhat(file,"ftyp");
     }
