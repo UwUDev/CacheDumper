@@ -7,7 +7,9 @@ import java.util.zip.GZIPInputStream;
 
 public class GZipUtils {
 
-    public static void unGunzipFile(String compressedFile, String decompressedFile) {
+    public static void unGzipFile(String compressedFile, String decompressedFile) {
+
+        System.out.println("Try to decompress : " + compressedFile);
 
         byte[] buffer = new byte[1024];
 

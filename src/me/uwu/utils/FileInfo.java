@@ -37,6 +37,10 @@ public class FileInfo {
         return isWhat(file,"ID3");
     }
 
+    public static boolean isZIP(String file) throws IOException {
+        return isWhat(file,"PK");
+    }
+
     public static boolean isGZ(String file) throws IOException {
         return isWhat(file,"\u001F�\b");
     }

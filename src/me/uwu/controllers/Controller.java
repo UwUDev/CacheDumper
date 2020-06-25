@@ -4,10 +4,7 @@ package me.uwu.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import me.uwu.utils.FastCopy;
-import me.uwu.utils.FastDelete;
-import me.uwu.utils.FileInfo;
-import me.uwu.utils.GZipUtils;
+import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
@@ -26,6 +23,7 @@ public class Controller {
     private int mp3 = 0;
     private int mp4 = 0;
     private int gz = 0;
+    private int zip = 0;
     private int webm = 0;
     private int webp = 0;
     private int other = 0;
@@ -113,41 +111,6 @@ public class Controller {
                 gif++;
             } else
 
-            if (fo.getName().contains(".webm")) {
-                System.out.println("C'est un webm");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                webm++;
-            } else
-
-            if (fo.getName().contains(".webp")) {
-                System.out.println("C'est un webp");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"webp/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                webp++;
-            } else
-
-            if (fo.getName().contains(".mp3")) {
-                System.out.println("C'est un mp3");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp3/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                mp3++;
-            } else
-
-            if (fo.getName().contains(".mp4")) {
-                System.out.println("C'est un mp4");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                mp4++;
-            } else
-
-            if (fo.getName().contains(".gz")) {
-                System.out.println("C'est un gz");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"gz/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                gz++;
-            } else
-
 
 
 
@@ -200,6 +163,13 @@ public class Controller {
                 gz++;
             } else
 
+            if (FileInfo.isZIP(fo.getAbsolutePath())) {
+                System.out.println("C'est un zip");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"zip/"+fo.getName()+".zip");
+                FastDelete.file(fo.getAbsolutePath());
+                zip++;
+            } else
+
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
                 System.out.println("C'est un mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
@@ -224,7 +194,7 @@ public class Controller {
 
         for(File gz : gzfiles) {
 
-            GZipUtils.unGunzipFile(gz.getAbsolutePath(), tempPath+"txt/"+ty+".txt");
+            GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath+"txt/"+ty+".txt");
             ty++;
         }
 
@@ -232,6 +202,13 @@ public class Controller {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        File zf = new File(tempPath+"zip/");
+        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(zf.listFiles()));
+
+        for(File z : zfiles) {
+            ZipUtils.unzip(z.getAbsolutePath(),tempPath+"Discord Code Files/");
         }
 
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
@@ -249,7 +226,7 @@ public class Controller {
 
         try {
             FileUtils.touch(stats);
-            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm +  "\nTotal .webp files : " + webp + "\nTotal .mp3 files : " + mp3 + "\nTotal .gz files : " + gz + "\nTotal .txt files : " + gz + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
+            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm +  "\nTotal .webp files : " + webp + "\nTotal .mp3 files : " + mp3 + "\nTotal .zip files : " + zip + "\nTotal .gz files : " + gz + "\nTotal .txt files : " + gz + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
