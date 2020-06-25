@@ -11,11 +11,12 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Controller {
 
     public TextField path;
-    private String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
+    private final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
 
     private int png = 0;
     private int jpg = 0;
@@ -27,17 +28,11 @@ public class Controller {
     private int webm = 0;
     private int webp = 0;
     private int other = 0;
-    private int total = 0;
 
     @FXML
     private TextField userField;
 
     @FXML protected void dumpThis(ActionEvent event) throws IOException {
-
-       /* String gzip_filepath = "C:\\temp\\test.gz";
-        String decopressed_filepath = "C:\\temp\\test2.txt";
-
-        GZipUtils.unGunzipFile(gzip_filepath, decopressed_filepath);*/
 
         PrintStream baseOut = System.out;
 
@@ -85,7 +80,7 @@ public class Controller {
         FastDelete.file(tempPath +"/index");
 
         File f = new File(tempPath);
-        ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
+        ArrayList<File> files = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
 
 
         for(File fo : files) {
@@ -186,7 +181,7 @@ public class Controller {
 
         File gzf = new File(tempPath+"gz/");
         File txtf = new File(tempPath+"txt/");
-        ArrayList<File> gzfiles = new ArrayList<File>(Arrays.asList(gzf.listFiles()));
+        ArrayList<File> gzfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(gzf.listFiles())));
 
         FileUtils.forceMkdir(txtf);
 
@@ -205,7 +200,7 @@ public class Controller {
         }
 
         File zf = new File(tempPath+"zip/");
-        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(zf.listFiles()));
+        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
 
         for(File z : zfiles) {
             ZipUtils.unzip(z.getAbsolutePath(),tempPath+"Discord Code Files/");
@@ -220,7 +215,7 @@ public class Controller {
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
 
-        total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other;
+        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
