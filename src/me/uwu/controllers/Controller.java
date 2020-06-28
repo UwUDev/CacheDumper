@@ -27,6 +27,10 @@ public class Controller {
     private int zip = 0;
     private int webm = 0;
     private int webp = 0;
+    private int font = 0;
+    private int js = 0;
+    private int json = 0;
+    private int svg = 0;
     private int other = 0;
 
     @FXML
@@ -180,7 +184,7 @@ public class Controller {
         }
 
         File gzf = new File(tempPath+"gz/");
-        File txtf = new File(tempPath+"txt/");
+        File txtf = new File(tempPath+"extracted/");
         ArrayList<File> gzfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(gzf.listFiles())));
 
         FileUtils.forceMkdir(txtf);
@@ -189,7 +193,7 @@ public class Controller {
 
         for(File gz : gzfiles) {
 
-            GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath+"txt/"+ty+".txt");
+            GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath+"extracted/"+ty);
             ty++;
         }
 
@@ -199,11 +203,59 @@ public class Controller {
             e.printStackTrace();
         }
 
-        File zf = new File(tempPath+"zip/");
-        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
+        File extracted = new File(tempPath+"extracted/");
+        ArrayList<File> extractedfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(extracted.listFiles())));
 
-        for(File z : zfiles) {
-            ZipUtils.unzip(z.getAbsolutePath(),tempPath+"Discord Code Files/");
+        for(File file : extractedfiles) {
+
+            if (FileInfo.isWOFF(file.getAbsolutePath())) {
+                System.out.println("C'est un woff");
+                FastCopy.file(file.getAbsolutePath(), tempPath+"fonts/"+file.getName()+".woff");
+                FastDelete.file(file.getAbsolutePath());
+                font++;
+            } else
+
+            if (FileInfo.isJS(file.getAbsolutePath())) {
+                System.out.println("C'est un js");
+                FastCopy.file(file.getAbsolutePath(), tempPath+"js/"+file.getName()+".js");
+                FastDelete.file(file.getAbsolutePath());
+                js++;
+            } else
+
+            if (FileInfo.isSVG(file.getAbsolutePath())) {
+                System.out.println("C'est un svg");
+                FastCopy.file(file.getAbsolutePath(), tempPath+"svg/"+file.getName()+".svg");
+                FastDelete.file(file.getAbsolutePath());
+                svg++;
+            } else
+
+            if (FileInfo.isJSON(file.getAbsolutePath())) {
+                System.out.println("C'est un json");
+                FastCopy.file(file.getAbsolutePath(), tempPath+"json/"+file.getName()+".json");
+                FastDelete.file(file.getAbsolutePath());
+                json++;
+            } else {
+                System.out.println("C'est un txt");
+                FastCopy.file(file.getAbsolutePath(), tempPath+"txt/"+file.getName()+".txt");
+                FastDelete.file(file.getAbsolutePath());
+            }
+
+        }
+
+        FastDelete.folder(tempPath+"extracted/");
+
+        File zipFolder = new File(tempPath+"zip/");
+        FileUtils.forceMkdir(zipFolder);
+
+        File zf = new File(tempPath+"zip/");
+        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(zf.listFiles()));
+
+        if (zfiles !=null) {
+            for (File z : zfiles) {
+                ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord Code Files/");
+            }
+        }else{
+            FastDelete.folder(tempPath+"zip/");
         }
 
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
@@ -215,13 +267,29 @@ public class Controller {
 
         System.out.println("\u001B[32m" + "Succesfully dumped" + "\u001B[0m");
 
-        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other;
+        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
         try {
             FileUtils.touch(stats);
-            FileUtils.writeStringToFile(stats, "Total .png files : " + png + "\nTotal .jpg files : " + jpg + "\nTotal .gif files : " + gif + "\nTotal .mp4 files : " + mp4 + "\nTotal .webm files : " + webm +  "\nTotal .webp files : " + webp + "\nTotal .mp3 files : " + mp3 + "\nTotal .zip files : " + zip + "\nTotal .gz files : " + gz + "\nTotal .txt files : " + gz + "\nTotal of unknown files : " + other + "\n\nTotal dumped files : " + total);
+            FileUtils.writeStringToFile(stats,
+                    "Total .png files : " + png +
+                            "\nTotal .jpg files : " + jpg +
+                            "\nTotal .svg files : " + svg +
+                            "\nTotal .gif files : " + gif +
+                            "\nTotal .mp4 files : " + mp4 +
+                            "\nTotal .webm files : " + webm +
+                            "\nTotal .webp files : " + webp +
+                            "\nTotal .mp3 files : " + mp3 +
+                            "\nTotal .zip files : " + zip +
+                            "\nTotal .gz files : " + gz +
+                            "\nTotal .txt files : " + gz +
+                            "\nTotal .js files : " + js +
+                            "\nTotal .json files : " + json +
+                            "\nTotal font files : " + font + " (" + font + " .woff & 0 .tff)" +
+                            "\nTotal of unknown files : " + other +
+                            "\n\nTotal dumped files : " + total);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

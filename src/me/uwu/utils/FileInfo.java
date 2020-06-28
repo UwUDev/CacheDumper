@@ -45,6 +45,24 @@ public class FileInfo {
         return isWhat(file,"\u001F�\b");
     }
 
+    public static boolean isWOFF(String file) throws IOException {
+        return isWhat(file,"wOFF");
+    }
+
+    public static boolean isSVG(String file) throws IOException {
+        return isWhat(file,"<svg");
+    }
+
+    public static boolean isJSON(String file) throws IOException {
+        return isWhat(file,"{");
+    }
+
+    public static boolean isJS(String file) throws IOException {
+        if(isWhat(file,"var") || isWhat(file,"width:") || isWhat(file,"jQuery") || isWhat(file,"Width:") || isWhat(file,"function()")) {
+            return true;
+        }else return false;
+    }
+
     public static boolean isWhat(String file, String contains) throws IOException {
 
         FileInputStream inputStream = null;
