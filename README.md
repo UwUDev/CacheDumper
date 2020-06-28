@@ -41,6 +41,7 @@ And just run Cache_Dumper.jar
 
 * [JavaFX](https://docs.oracle.com/javase/8/javafx/api/toc.html) - The web framework used to render
 * [Apache Commons IO ™](http://commons.apache.org/proper/commons-io/) - Dependency for files management
+* [zip4j](http://www.lingala.net/zip4j.html) - Dependency for unzip files very fast
 * [Nord](https://github.com/arcticicestudio/nord) - Only for color palettes
 
 ## Author
