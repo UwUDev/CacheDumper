@@ -84,7 +84,7 @@ public class Controller {
         FastDelete.file(tempPath +"/index");
 
         File f = new File(tempPath);
-        ArrayList<File> files = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
+        ArrayList<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
 
 
         for(File fo : files) {
@@ -185,7 +185,7 @@ public class Controller {
 
         File gzf = new File(tempPath+"gz/");
         File txtf = new File(tempPath+"extracted/");
-        ArrayList<File> gzfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(gzf.listFiles())));
+        ArrayList<File> gzfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(gzf.listFiles())));
 
         FileUtils.forceMkdir(txtf);
 
@@ -204,7 +204,7 @@ public class Controller {
         }
 
         File extracted = new File(tempPath+"extracted/");
-        ArrayList<File> extractedfiles = new ArrayList<File>(Arrays.asList(Objects.requireNonNull(extracted.listFiles())));
+        ArrayList<File> extractedfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(extracted.listFiles())));
 
         for(File file : extractedfiles) {
 
@@ -248,7 +248,7 @@ public class Controller {
         FileUtils.forceMkdir(zipFolder);
 
         File zf = new File(tempPath+"zip/");
-        ArrayList<File> zfiles = new ArrayList<File>(Arrays.asList(zf.listFiles()));
+        ArrayList<File> zfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
 
         if (zfiles !=null) {
             for (File z : zfiles) {

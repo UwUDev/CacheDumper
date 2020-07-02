@@ -1,7 +1,6 @@
 package me.uwu.utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -12,9 +11,7 @@ public class FileInfo {
     }
 
     public static boolean isJPG(String file) throws IOException {
-            if(isWhat(file,"Exif") || isWhat(file,"JFIF")) {
-                return true;
-            }else return false;
+        return isWhat(file, "Exif") || isWhat(file, "JFIF");
     }
 
     public static boolean isGIF(String file) throws IOException {
@@ -58,9 +55,7 @@ public class FileInfo {
     }
 
     public static boolean isJS(String file) throws IOException {
-        if(isWhat(file,"var") || isWhat(file,"width:") || isWhat(file,"jQuery") || isWhat(file,"Width:") || isWhat(file,"function()")) {
-            return true;
-        }else return false;
+        return isWhat(file, "var") || isWhat(file, "width:") || isWhat(file, "jQuery") || isWhat(file, "Width:") || isWhat(file, "function()");
     }
 
     public static boolean isWhat(String file, String contains) throws IOException {
@@ -77,16 +72,12 @@ public class FileInfo {
 
             if(line.contains(contains)){
                 test = true;
-            }else{
-                test = false;
             }
 
 
             if (sc.ioException() != null) {
                 throw sc.ioException();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
