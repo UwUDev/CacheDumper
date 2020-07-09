@@ -1,7 +1,5 @@
 package me.uwu.controllers;
 
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import me.uwu.utils.*;
@@ -18,25 +16,10 @@ public class Controller {
     public TextField path;
     private final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
 
-    private int png = 0;
-    private int jpg = 0;
-    private int gif = 0;
-    private int mp3 = 0;
-    private int mp4 = 0;
-    private int gz = 0;
-    private int zip = 0;
-    private int webm = 0;
-    private int webp = 0;
-    private int font = 0;
-    private int js = 0;
-    private int json = 0;
-    private int svg = 0;
-    private int other = 0;
+    private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other = 0;
 
-    @FXML
-    private TextField userField;
 
-    @FXML protected void dumpThis(ActionEvent event) throws IOException {
+    @FXML protected void dumpThis() throws IOException {
 
         PrintStream baseOut = System.out;
 
@@ -250,12 +233,8 @@ public class Controller {
         File zf = new File(tempPath+"zip/");
         ArrayList<File> zfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
 
-        if (zfiles !=null) {
-            for (File z : zfiles) {
-                ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord Code Files/");
-            }
-        }else{
-            FastDelete.folder(tempPath+"zip/");
+        for (File z : zfiles) {
+            ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
         }
 
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
