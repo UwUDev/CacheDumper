@@ -31,7 +31,7 @@ public class GZipUtils {
             gZIPInputStream.close();
             fileOutputStream.close();
 
-            System.out.println("The file was decompressed successfully!");
+            System.out.println("The file was decompressed successfully!" + TimeUtils.dateAndTime());
 
         } catch (IOException ex) {
             ex.printStackTrace();

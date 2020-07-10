@@ -11,13 +11,13 @@ public class FastCopy {
         File fi1 = new File(fileIn);
         File fi2 = new File(fileOut);
 
-        System.out.println("Try to copy " + fileIn + " to " + fileOut);
+        System.out.println("Try to copy " + fileIn + " to " + fileOut + TimeUtils.dateAndTime());
 
         try {
             FileUtils.copyFile(fi1, fi2);
-            System.out.println("Successfully copied " + fileIn + " to " + fileOut + " :)");
+            System.out.println("Successfully copied " + fileIn + " to " + fileOut + " :)" + TimeUtils.dateAndTime());
         } catch (IOException e) {
-            System.out.println("Failed to copy " + fileIn + " to " + fileOut + " :/");
+            System.out.println("Failed to copy " + fileIn + " to " + fileOut + " :/" + TimeUtils.dateAndTime());
             e.printStackTrace();
         }
     }
@@ -26,13 +26,13 @@ public class FastCopy {
         File srcFo1 = new File(folderIn);
         File srcFo2 = new File(folderOut);
 
-        System.out.println("Try to copy " + folderIn + " to " + folderOut);
+        System.out.println("Try to copy " + folderIn + " to " + folderOut + TimeUtils.dateAndTime());
 
         try {
             FileUtils.copyDirectory(srcFo1, srcFo2);
-            System.out.println("Successfully copied " + folderIn + " to " + folderOut + " :)");
+            System.out.println("Successfully copied " + folderIn + " to " + folderOut + " :)" + TimeUtils.dateAndTime());
         } catch (IOException e) {
-            System.out.println("Failed to copy " + folderIn + " to " + folderOut + " :/");
+            System.out.println("Failed to copy " + folderIn + " to " + folderOut + " :/" + TimeUtils.dateAndTime());
             e.printStackTrace();
         }
     }
