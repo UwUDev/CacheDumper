@@ -7,8 +7,10 @@ import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Controller {
@@ -283,4 +285,37 @@ public class Controller {
 
 
     }
+
+    @FXML protected void cleanThis() throws IOException, InterruptedException {
+
+        FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper");
+
+        FileUtils.forceMkdir(new File(System.getenv("APPDATA")+"/CacheDumper"));
+
+        Thread.sleep(1000);
+
+        BufferedWriter writer = null;
+
+        try {
+            String timeLog = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+            File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+
+            System.out.println(logFile.getCanonicalPath());
+
+            writer = new BufferedWriter(new FileWriter(logFile));
+            writer.write("Successfully cleaned backups and temporary files of cache dumper at "+timeLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert writer != null;
+                writer.close();
+            } catch (Exception ignored) {
+            }
+        }
+        File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+        Desktop.getDesktop().edit(logFile);
+
+    }
+
 }

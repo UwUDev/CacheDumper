@@ -47,7 +47,7 @@
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button layoutX="383.0" layoutY="599.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #BF616A;" text="Clear cache">
+            <Button onAction="#cleanThis" layoutX="383.0" layoutY="599.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="514.0" style="-fx-background-color: #BF616A;" text="Clean cache dumper">
                <font>
                   <Font size="25.0" />
                </font>
