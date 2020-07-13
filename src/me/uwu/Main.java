@@ -37,7 +37,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         logger.info("Creating window");
-        logger.error("test");
         launch(args);
     }
 }
