@@ -1,5 +1,8 @@
 package me.uwu.utils;
 
+import me.uwu.Main;
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,9 +10,11 @@ import java.util.zip.GZIPInputStream;
 
 public class GZipUtils {
 
+    private static final Logger logger = Logger.getLogger(GZipUtils.class);
+
     public static void unGzipFile(String compressedFile, String decompressedFile) {
 
-        System.out.println("Try to decompress : " + compressedFile);
+        logger.info("Try to decompress : " + compressedFile);
 
         byte[] buffer = new byte[1024];
 
@@ -31,10 +36,11 @@ public class GZipUtils {
             gZIPInputStream.close();
             fileOutputStream.close();
 
-            System.out.println("The file was decompressed successfully!" + TimeUtils.dateAndTime());
+            logger.info("The file was decompressed successfully!");
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("Failed to unzip " + compressedFile + " to " + decompressedFile, ex);
+            //ex.printStackTrace();
         }
 
     }

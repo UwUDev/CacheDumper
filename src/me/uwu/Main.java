@@ -7,6 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import me.uwu.utils.FastDelete;
+import me.uwu.utils.GZipUtils;
+import org.apache.log4j.Logger;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -14,6 +21,8 @@ public class Main extends Application {
 
     @FXML
     private TextField userField;
+
+    private static final Logger logger = Logger.getLogger(Main.class);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -27,6 +36,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        logger.info("Creating window");
+        logger.error("test");
         launch(args);
     }
 }

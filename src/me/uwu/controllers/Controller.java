@@ -2,15 +2,18 @@ package me.uwu.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import me.uwu.Main;
 import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.io.*;
-import java.text.SimpleDateFormat;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Objects;
 
 public class Controller {
@@ -20,49 +23,44 @@ public class Controller {
 
     private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other = 0;
 
+    private static final Logger logger = Logger.getLogger(Controller.class);
 
     @FXML protected void dumpThis() throws IOException {
 
-        PrintStream baseOut = System.out;
-
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
-        File logs = new File(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
-
-        try {
-            FileUtils.touch(logs);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        PrintStream out = new PrintStream(new FileOutputStream(System.getenv("APPDATA")+"/CacheDumper/logs.txt"));
-        System.setOut(out);
-
         String finalPath;
-        System.out.println(path.getText());
+        logger.debug(path.getText());
 
-        System.out.println(System.getenv("UserProfile"));
+        logger.debug(System.getenv("UserProfile"));
 
         finalPath = path.getText();
         finalPath = finalPath.replace("%appdata%",System.getenv("APPDATA"));
         finalPath = finalPath.replace("%UserProfile%",System.getenv("UserProfile"));
 
-        System.out.println(finalPath);
+        logger.debug(finalPath);
 
-        System.out.println("\u001B[32m" + "Started DUUUUUUMPING boi !" + TimeUtils.dateAndTime());
+        logger.info("Started DUUUUUUMPING boi !");
 
+        logger.warn("Cleaning temp files is needed");
 
-
-        System.out.println("Cleaning temp files" + TimeUtils.dateAndTime());
+        logger.info("Deleting : " + tempPath);
         FastDelete.folder(tempPath);
+
+        logger.info("Deleting : " + finalPath);
         FastDelete.folder(finalPath+"/Cache Dumper");
 
-        System.out.println("Copy cache" + TimeUtils.dateAndTime());
+        logger.info("Copy cache started");
         FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
-        FastCopy.folder(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE",tempPath);
 
+        Path loggerPath = Paths.get(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
 
-        System.out.println("Filter cache copy" + TimeUtils.dateAndTime());
+        if (Files.exists(loggerPath)) {
+            logger.info("Found message logger");
+            FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", tempPath);
+        }
+
+        logger.info("Filter cache copy");
         for(int oof = 0; oof <=4;oof++){
             FastDelete.file(tempPath + "data_" + oof);
         }
@@ -75,21 +73,21 @@ public class Controller {
         for(File fo : files) {
 
             if (fo.getName().contains(".png")) {
-                System.out.println("C'est un png" + TimeUtils.dateAndTime());
+                logger.info("Detected type : png");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
                 png++;
             } else
 
             if (fo.getName().contains(".jpg")) {
-                System.out.println("C'est un jpg" + TimeUtils.dateAndTime());
+                logger.info("Detected type : jpg");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
                 jpg++;
             } else
 
             if (fo.getName().contains(".gif")) {
-                System.out.println("C'est un gif" + TimeUtils.dateAndTime());
+                logger.info("Detected type : gif");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
                 gif++;
@@ -99,68 +97,68 @@ public class Controller {
 
 
             if (FileInfo.isPNG(fo.getAbsolutePath())) {
-                System.out.println("C'est un png" + TimeUtils.dateAndTime());
+                logger.info("Detected type : png");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName()+".png");
                 FastDelete.file(fo.getAbsolutePath());
                 png++;
             } else
 
             if (FileInfo.isJPG(fo.getAbsolutePath())) {
-                System.out.println("C'est un jpg" + TimeUtils.dateAndTime());
+                logger.info("Detected type : jpg");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName()+".jpg");
                 FastDelete.file(fo.getAbsolutePath());
                 jpg++;
             } else
 
             if (FileInfo.isGIF(fo.getAbsolutePath())) {
-                System.out.println("C'est un gif" + TimeUtils.dateAndTime());
+                logger.info("Detected type : gif");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName()+".gif");
                 FastDelete.file(fo.getAbsolutePath());
                 gif++;
             } else
 
             if (FileInfo.isWEBM(fo.getAbsolutePath())) {
-                System.out.println("C'est un webm" + TimeUtils.dateAndTime());
+                logger.info("Detected type : webm");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName()+".webm");
                 FastDelete.file(fo.getAbsolutePath());
                 webm++;
             } else
 
             if (FileInfo.isWEBP(fo.getAbsolutePath())) {
-                System.out.println("C'est un webp" + TimeUtils.dateAndTime());
+                logger.info("Detected type : webp");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"webp/"+fo.getName()+".webp");
                 FastDelete.file(fo.getAbsolutePath());
                 webp++;
             } else
 
             if (FileInfo.isMP3(fo.getAbsolutePath())) {
-                System.out.println("C'est un mp3" + TimeUtils.dateAndTime());
+                logger.info("Detected type : mp3");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp3/"+fo.getName()+".mp3");
                 FastDelete.file(fo.getAbsolutePath());
                 mp3++;
             } else
 
             if (FileInfo.isGZ(fo.getAbsolutePath())) {
-                System.out.println("C'est un gz" + TimeUtils.dateAndTime());
+                logger.info("Detected type : gz");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"gz/"+fo.getName()+".gz");
                 FastDelete.file(fo.getAbsolutePath());
                 gz++;
             } else
 
             if (FileInfo.isZIP(fo.getAbsolutePath())) {
-                System.out.println("C'est un zip" + TimeUtils.dateAndTime());
+                logger.info("Detected type : zip");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"zip/"+fo.getName()+".zip");
                 FastDelete.file(fo.getAbsolutePath());
                 zip++;
             } else
 
             if (FileInfo.isMP4(fo.getAbsolutePath())) {
-                System.out.println("C'est un mp4" + TimeUtils.dateAndTime());
+                logger.info("Detected type : mp4");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
                 FastDelete.file(fo.getAbsolutePath());
                 mp4++;
             } else {
-                System.out.println("C'est un format inconnu :/" + TimeUtils.dateAndTime());
+                logger.info("Detected type : format inconnu :/");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"unknown/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
                 other++;
@@ -194,33 +192,33 @@ public class Controller {
         for(File file : extractedfiles) {
 
             if (FileInfo.isWOFF(file.getAbsolutePath())) {
-                System.out.println("C'est un woff" + TimeUtils.dateAndTime());
+                logger.info("Detected type : woff");
                 FastCopy.file(file.getAbsolutePath(), tempPath+"fonts/"+file.getName()+".woff");
                 FastDelete.file(file.getAbsolutePath());
                 font++;
             } else
 
             if (FileInfo.isJS(file.getAbsolutePath())) {
-                System.out.println("C'est un js" + TimeUtils.dateAndTime());
+                logger.info("Detected type : js");
                 FastCopy.file(file.getAbsolutePath(), tempPath+"js/"+file.getName()+".js");
                 FastDelete.file(file.getAbsolutePath());
                 js++;
             } else
 
             if (FileInfo.isSVG(file.getAbsolutePath())) {
-                System.out.println("C'est un svg" + TimeUtils.dateAndTime());
+                logger.info("Detected type : svg");
                 FastCopy.file(file.getAbsolutePath(), tempPath+"svg/"+file.getName()+".svg");
                 FastDelete.file(file.getAbsolutePath());
                 svg++;
             } else
 
             if (FileInfo.isJSON(file.getAbsolutePath())) {
-                System.out.println("C'est un json" + TimeUtils.dateAndTime());
+                logger.info("Detected type : json");
                 FastCopy.file(file.getAbsolutePath(), tempPath+"json/"+file.getName()+".json");
                 FastDelete.file(file.getAbsolutePath());
                 json++;
             } else {
-                System.out.println("C'est un txt" + TimeUtils.dateAndTime());
+                logger.info("Detected type : txt");
                 FastCopy.file(file.getAbsolutePath(), tempPath+"txt/"+file.getName()+".txt");
                 FastDelete.file(file.getAbsolutePath());
             }
@@ -236,24 +234,23 @@ public class Controller {
         ArrayList<File> zfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
 
         for (File z : zfiles) {
-            System.out.println("extracting " + z.getAbsolutePath() + TimeUtils.dateAndTime());
             ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
         }
 
         FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
-        FastCopy.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt",finalPath+"/Cache Dumper/logs.txt");
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
         FastDelete.folder(tempPath);
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
-        System.out.println("Succesfully dumped" + TimeUtils.dateAndTime());
+        logger.info("Succesfully dumped");
 
         int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
         try {
+            logger.info("Generating stsis file");
             FileUtils.touch(stats);
             FileUtils.writeStringToFile(stats,
                     "Total .png files : " + png +
@@ -273,12 +270,10 @@ public class Controller {
                             "\nTotal of unknown files : " + other +
                             "\n\nTotal dumped files : " + total);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error("Cant generate or edit stats.txt", e);
         }
 
         Desktop.getDesktop().open(new File(finalPath+"/Cache Dumper"));
-
-        System.setOut(baseOut);
 
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
@@ -300,7 +295,7 @@ public class Controller {
         try {
             File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
 
-            System.out.println(logFile.getCanonicalPath() + TimeUtils.dateAndTime());
+            logger.debug(logFile.getCanonicalPath());
 
             writer = new BufferedWriter(new FileWriter(logFile));
             writer.write("Successfully cleaned backups and temporary files of cache dumper"+TimeUtils.dateAndTime());

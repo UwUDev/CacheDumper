@@ -1,10 +1,15 @@
 package me.uwu.utils;
 
+import me.uwu.Main;
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class FileInfo {
+
+    private static final Logger logger = Logger.getLogger(FileInfo.class);
 
     public static boolean isPNG(String file) throws IOException {
         return isWhat(file,"PNG");
@@ -68,7 +73,7 @@ public class FileInfo {
             sc = new Scanner(inputStream, "UTF-8");
 
             String line = sc.nextLine();
-            // System.out.println(line);
+            logger.debug("First line of the file is : " + line);
 
             if(line.contains(contains)){
                 test = true;
