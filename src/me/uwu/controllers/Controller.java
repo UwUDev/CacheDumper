@@ -27,8 +27,6 @@ public class Controller {
 
     @FXML protected void dumpThis() throws IOException {
 
-        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
-
         String finalPath;
         logger.debug(path.getText());
 
@@ -60,11 +58,26 @@ public class Controller {
             FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", tempPath);
         }
 
+        StringBuilder sb = new StringBuilder();
         logger.info("Filter cache copy");
-        for(int oof = 0; oof <=4;oof++){
+        for(int oof = 0; oof <=3;oof++){
+            sb.append(FileInfo.getLinksFromFile(tempPath + "data_" + oof));
             FastDelete.file(tempPath + "data_" + oof);
         }
+
+        sb.append(FileInfo.getLinksFromFile(tempPath +"/index"));
         FastDelete.file(tempPath +"/index");
+
+
+        File links = new File(finalPath+"/Cache Dumper/Links found.txt");
+
+        try {
+            logger.info("Generating links file");
+            FileUtils.touch(links);
+            FileUtils.writeStringToFile(links,sb.toString());
+        } catch (IOException e) {
+            logger.error("Cant generate or edit Links found.txt", e);
+        }
 
         File f = new File(tempPath);
         ArrayList<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
@@ -250,7 +263,7 @@ public class Controller {
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
         try {
-            logger.info("Generating stsis file");
+            logger.info("Generating stats file");
             FileUtils.touch(stats);
             FileUtils.writeStringToFile(stats,
                     "Total .png files : " + png +
