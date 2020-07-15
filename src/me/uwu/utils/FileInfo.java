@@ -3,6 +3,7 @@ package me.uwu.utils;
 import me.uwu.Main;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
@@ -65,13 +66,13 @@ public class FileInfo {
         return isWhat(file, "var") || isWhat(file, "width:") || isWhat(file, "jQuery") || isWhat(file, "Width:") || isWhat(file, "function()");
     }
 
-    public static boolean isWhat(String file, String contains) throws IOException {
+    public static boolean isWhat(String filePath, String contains) throws IOException {
 
         FileInputStream inputStream = null;
         Scanner sc = null;
         boolean test = false;
         try {
-            inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(filePath);
             sc = new Scanner(inputStream, "UTF-8");
 
             String line = sc.nextLine();
@@ -100,13 +101,25 @@ public class FileInfo {
 
     }
 
+    public static boolean isTrashFile(String filePath){
+        boolean isTrash = false;
+        File f = new File(filePath);
+
+        logger.debug("File size is : " + f.length());
+
+        if (f.length() == 1048576 || f.length() == 1048344) isTrash = true;
+        //1048344 c'est quand windows compresse les dossier avec les fleches bleues
+
+        return isTrash;
+    }
+
     private static final Pattern urlPattern = Pattern.compile(
             "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
                     + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
                     + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
-    public static String getLinksFromFile (String path) throws IOException {
+    public static String getLinksFromFile (String filePath) throws IOException {
 
         StringBuilder sb = new StringBuilder();
 
@@ -114,7 +127,7 @@ public class FileInfo {
         Scanner sc = null;
         boolean test = false;
         try {
-            inputStream = new FileInputStream(path);
+            inputStream = new FileInputStream(filePath);
             sc = new Scanner(inputStream, "UTF-8");
 
 

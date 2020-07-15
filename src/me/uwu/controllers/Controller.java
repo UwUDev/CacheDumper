@@ -2,7 +2,6 @@ package me.uwu.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import me.uwu.Main;
 import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -21,7 +20,7 @@ public class Controller {
     public TextField path;
     private final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
 
-    private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other = 0;
+    private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash = 0;
 
     private static final Logger logger = Logger.getLogger(Controller.class);
 
@@ -170,8 +169,15 @@ public class Controller {
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
                 FastDelete.file(fo.getAbsolutePath());
                 mp4++;
+            } else
+
+            if (FileInfo.isTrashFile(fo.getPath())) {
+                logger.info("Detected trash file");
+                FastCopy.file(fo.getAbsolutePath(), tempPath+"Intentional trash files/"+fo.getName());
+                FastDelete.file(fo.getAbsolutePath());
+                trash++;
             } else {
-                logger.info("Detected type : format inconnu :/");
+                logger.info("Unable to fine what kind of file it's :/");
                 FastCopy.file(fo.getAbsolutePath(), tempPath+"unknown/"+fo.getName());
                 FastDelete.file(fo.getAbsolutePath());
                 other++;
@@ -258,7 +264,7 @@ public class Controller {
 
         logger.info("Succesfully dumped");
 
-        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font;
+        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font + trash;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
@@ -275,7 +281,7 @@ public class Controller {
                             "\nTotal .webp files : " + webp +
                             "\nTotal .mp3 files : " + mp3 +
                             "\nTotal .zip files : " + zip +
-                            "\nTotal .gz files : " + gz +
+                            "\nTotal trash files : " + trash +
                             "\nTotal .txt files : " + gz +
                             "\nTotal .js files : " + js +
                             "\nTotal .json files : " + json +
