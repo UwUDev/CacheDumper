@@ -1,7 +1,6 @@
 package me.uwu.controllers;
 
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import me.uwu.other.GrabLinks;
@@ -39,7 +38,7 @@ public class Controller {
         finalPath = path.getText();
         finalPath = finalPath.replace("%appdata%", System.getenv("APPDATA")).replace("%UserProfile%", System.getenv("UserProfile"));
 
-       /* logger.debug(finalPath);
+        logger.debug(finalPath);
 
         logger.info("Started DUUUUUUMPING boi !");
 
@@ -52,7 +51,7 @@ public class Controller {
         FastDelete.folder(finalPath+"/Cache Dumper");
 
         logger.info("Copy cache started");
-        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);*/
+        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
 
         Path bdPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/");
         Path loggerPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
@@ -356,9 +355,7 @@ public class Controller {
 
     }
 
-
-
-      public void cleanThis(ActionEvent actionEvent) throws IOException, InterruptedException {
+      public void cleanThis() throws IOException, InterruptedException {
           FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper");
 
           FileUtils.forceMkdir(new File(System.getenv("APPDATA")+"/CacheDumper"));
