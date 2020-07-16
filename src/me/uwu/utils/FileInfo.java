@@ -64,7 +64,17 @@ public class FileInfo {
         return isWhat(filePath, "var") || isWhat(filePath, "width:") || isWhat(filePath, "jQuery") || isWhat(filePath, "Width:") || isWhat(filePath, "function()");
     }
 
+    public static boolean isDB(String filePath) throws IOException {
+        return isWhat(filePath,"SQLite");
+    }
+
     public static boolean isWhat(String filePath, String contains) throws IOException {
+
+        File f = new File(filePath);
+        if (f.length() ==0){
+            logger.warn("File is null");
+            return false;
+        }
 
         FileInputStream inputStream = null;
         Scanner sc = null;

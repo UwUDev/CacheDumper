@@ -1,12 +1,14 @@
 package me.uwu.controllers;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import me.uwu.other.GrabLinks;
 import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,13 +21,15 @@ import java.nio.file.Paths;
 public class Controller {
 
     public TextField path;
-    public static final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
+    public static final String tempPath = System.getenv("APPDATA") + "/CacheDumper/tempfiles/";
 
-    private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash = 0;
+    private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash, plugins, plconfig, themes, dataB, ico, log = 0;
+    private boolean betterDiscord = false;
 
     private static final Logger logger = Logger.getLogger(Controller.class);
 
-    @FXML protected void dumpThis() throws IOException {
+    @FXML
+    protected void dumpThis() throws IOException, InterruptedException {
 
         String finalPath;
         logger.debug(path.getText());
@@ -33,9 +37,9 @@ public class Controller {
         logger.debug(System.getenv("UserProfile"));
 
         finalPath = path.getText();
-        finalPath = finalPath.replace("%appdata%",System.getenv("APPDATA")).replace("%UserProfile%",System.getenv("UserProfile"));
+        finalPath = finalPath.replace("%appdata%", System.getenv("APPDATA")).replace("%UserProfile%", System.getenv("UserProfile"));
 
-        logger.debug(finalPath);
+       /* logger.debug(finalPath);
 
         logger.info("Started DUUUUUUMPING boi !");
 
@@ -48,21 +52,93 @@ public class Controller {
         FastDelete.folder(finalPath+"/Cache Dumper");
 
         logger.info("Copy cache started");
-        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
+        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);*/
 
-        Path loggerPath = Paths.get(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
-        Path loggerPath2 = Paths.get(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
+        Path bdPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/");
+        Path loggerPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
 
-
-        if (Files.exists(loggerPath)) {
-            logger.info("Found message logger");
-            FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", tempPath);
+        if (Files.exists(bdPath)) {
+            betterDiscord = true;
         }
 
-        if (Files.exists(loggerPath2)) {
-            logger.info("Found message logger");
-            FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", finalPath + "/Other Loggers Plugins");
+        if (betterDiscord) {
+
+            for (File pl : GetFiles.fromFolder(bdPath.toString() + "/plugins")) {
+                if (pl.getName().contains(".json")) {
+                    logger.info("Detected BD plugin config");
+                    FastCopy.file(pl.getAbsolutePath(), tempPath + "plugins/configs/" + pl.getName());
+                    plconfig++;
+                } else if (pl.getName().contains(".js")) {
+                    logger.info("Detected BD plugin");
+                    FastCopy.file(pl.getAbsolutePath(), tempPath + "plugins/" + pl.getName());
+                    plugins++;
+                }
+            }
+
+            for (File th : GetFiles.fromFolder(bdPath.toString() + "/themes")) {
+                logger.info("Detected BD theme");
+                FastCopy.file(th.getAbsolutePath(), tempPath + "themes/" + th.getName());
+                themes++;
+            }
+
+            FastCopy.file(bdPath.toString() + "/emote_data.json", tempPath + "json/emote_data.json");
+            FastCopy.file(bdPath.toString() + "/bdstorage.json", tempPath + "json/bdstorage.json");
+
+            /*if (Files.exists(loggerPath)) {
+                logger.info("Found message logger");
+                FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", finalPath + "/Other Loggers Plugins");
+            }*/
         }
+
+        for (File ff : GetFiles.fromFolder(System.getenv("APPDATA") + "/discord")) {
+            FastCopy.file(ff.getAbsolutePath(), tempPath + "temp/" + ff.getName());
+        }
+
+        for (File f1 : GetFiles.fromFolder(tempPath + "/temp")) {
+            if (FileInfo.isDB(f1.getAbsolutePath())) {
+                logger.info("Detected Database");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "database/" + f1.getName() + ".db3");
+                FastDelete.file(f1.getAbsolutePath());
+                dataB++;
+            } else if (f1.getName().contains(".ico")) {
+                logger.info("Detected type : ico");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "ico/" + f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                ico++;
+            } else if (f1.getName().contains(".png")) {
+                logger.info("Detected type : png");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "png/" + f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                png++;
+            } else if (f1.getName().contains(".json")) {
+                logger.info("Detected type : json");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "json/" + f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                json++;
+            } else if (f1.getName().contains(".tmp")) {
+                logger.info("Detected type : json");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "json/" + f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                json++;
+            } else if (f1.getName().contains(".log")) {
+                logger.info("Detected type : log");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "log/" + f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                log++;
+            } else if (FileInfo.isJSON(f1.getAbsolutePath())) {
+                logger.info("Detected type : json");
+                FastCopy.file(f1.getAbsolutePath(), tempPath + "json/" + f1.getName() + ".json");
+                FastDelete.file(f1.getAbsolutePath());
+                json++;
+            } else {
+                logger.info("Unable to fine what kind of file it's :/");
+                FastCopy.file(f1.getAbsolutePath(), tempPath+"unknown/"+f1.getName());
+                FastDelete.file(f1.getAbsolutePath());
+                other++;
+            }
+        }
+
+        FastDelete.folder(tempPath + "/temp");
 
         GrabLinks.toFile();
 
@@ -237,7 +313,7 @@ public class Controller {
 
         logger.info("Succesfully dumped");
 
-        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font + trash;
+        int total = png + jpg + gif + webm + webp + mp3 + mp4 + gz + other + js + json + svg + font + trash + plugins + plconfig + themes + dataB + ico + log;
 
         File stats = new File(finalPath+"/Cache Dumper/Stats.txt");
 
@@ -257,10 +333,16 @@ public class Controller {
                             "\nTotal trash files : " + trash +
                             "\nTotal .txt files : " + gz +
                             "\nTotal .js files : " + js +
+                            "\nTotal databases : " + dataB +
+                            "\nTotal .ico files : " + ico +
+                            "\nTotal .log : " + log +
                             "\nTotal .json files : " + json +
                             "\nTotal font files : " + font + " (" + font + " .woff & 0 .tff)" +
-                            "\nTotal of unknown files : " + other +
-                            "\n\nTotal dumped files : " + total);
+                            "\n\nTotal plugins : " + plugins +
+                            "\nTotal plugins configs : " + plconfig +
+                            "\nTotal themes : " + themes +
+                            "\n\nTotal of unknown files : " + other +
+                            "\n\n\n\nTotal dumped files : " + total);
         } catch (IOException e) {
             logger.error("Cant generate or edit stats.txt", e);
         }
@@ -274,35 +356,34 @@ public class Controller {
 
     }
 
-    @FXML protected void cleanThis() throws IOException, InterruptedException {
 
-        FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper");
 
-        FileUtils.forceMkdir(new File(System.getenv("APPDATA")+"/CacheDumper"));
+      public void cleanThis(ActionEvent actionEvent) throws IOException, InterruptedException {
+          FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper");
 
-        Thread.sleep(1000);
+          FileUtils.forceMkdir(new File(System.getenv("APPDATA")+"/CacheDumper"));
 
-        BufferedWriter writer = null;
+          Thread.sleep(1000);
 
-        try {
-            File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+          BufferedWriter writer = null;
 
-            logger.debug(logFile.getCanonicalPath());
+          try {
+              File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
 
-            writer = new BufferedWriter(new FileWriter(logFile));
-            writer.write("Successfully cleaned backups and temporary files of cache dumper"+TimeUtils.dateAndTime());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert writer != null;
-                writer.close();
-            } catch (Exception ignored) {
-            }
-        }
-        File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
-        Desktop.getDesktop().edit(logFile);
+              logger.debug(logFile.getCanonicalPath());
 
+              writer = new BufferedWriter(new FileWriter(logFile));
+              writer.write("Successfully cleaned backups and temporary files of cache dumper"+ TimeUtils.dateAndTime());
+          } catch (Exception e) {
+              e.printStackTrace();
+          } finally {
+              try {
+                  assert writer != null;
+                  writer.close();
+              } catch (Exception ignored) {
+              }
+          }
+          File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+          Desktop.getDesktop().edit(logFile);
+      }
     }
-
-}
