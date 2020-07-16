@@ -28,7 +28,7 @@ public class Controller {
     private static final Logger logger = Logger.getLogger(Controller.class);
 
     @FXML
-    protected void dumpThis() throws IOException, InterruptedException {
+    protected void dumpThis() throws IOException{
 
         String finalPath;
         logger.debug(path.getText());
@@ -83,10 +83,10 @@ public class Controller {
             FastCopy.file(bdPath.toString() + "/emote_data.json", tempPath + "json/emote_data.json");
             FastCopy.file(bdPath.toString() + "/bdstorage.json", tempPath + "json/bdstorage.json");
 
-            /*if (Files.exists(loggerPath)) {
+            if (Files.exists(loggerPath)) {
                 logger.info("Found message logger");
                 FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", finalPath + "/Other Loggers Plugins");
-            }*/
+            }
         }
 
         for (File ff : GetFiles.fromFolder(System.getenv("APPDATA") + "/discord")) {
