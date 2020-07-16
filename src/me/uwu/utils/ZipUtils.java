@@ -1,6 +1,5 @@
 package me.uwu.utils;
 
-import me.uwu.Main;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.log4j.Logger;

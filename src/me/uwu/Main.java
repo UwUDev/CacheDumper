@@ -1,26 +1,13 @@
 package me.uwu;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import me.uwu.utils.FastDelete;
-import me.uwu.utils.GZipUtils;
 import org.apache.log4j.Logger;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Main extends Application {
-
-    public TextField path;
-
-    @FXML
-    private TextField userField;
 
     private static final Logger logger = Logger.getLogger(Main.class);
 

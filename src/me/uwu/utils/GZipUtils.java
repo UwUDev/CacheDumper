@@ -1,8 +1,6 @@
 package me.uwu.utils;
 
-import me.uwu.Main;
 import org.apache.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

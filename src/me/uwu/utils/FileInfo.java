@@ -1,8 +1,6 @@
 package me.uwu.utils;
 
-import me.uwu.Main;
 import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,56 +12,56 @@ public class FileInfo {
 
     private static final Logger logger = Logger.getLogger(FileInfo.class);
 
-    public static boolean isPNG(String file) throws IOException {
-        return isWhat(file,"PNG");
+    public static boolean isPNG(String filePath) throws IOException {
+        return isWhat(filePath,"PNG");
     }
 
-    public static boolean isJPG(String file) throws IOException {
-        return isWhat(file, "Exif") || isWhat(file, "JFIF");
+    public static boolean isJPG(String filePath) throws IOException {
+        return isWhat(filePath, "Exif") || isWhat(filePath, "JFIF");
     }
 
-    public static boolean isGIF(String file) throws IOException {
-        return isWhat(file,"GIF");
+    public static boolean isGIF(String filePath) throws IOException {
+        return isWhat(filePath,"GIF");
     }
 
-    public static boolean isWEBM(String file) throws IOException {
-        return isWhat(file,"webm");
+    public static boolean isWEBM(String filePath) throws IOException {
+        return isWhat(filePath,"webm");
     }
 
-    public static boolean isWEBP(String file) throws IOException {
-        return isWhat(file,"WEBP");
+    public static boolean isWEBP(String filePath) throws IOException {
+        return isWhat(filePath,"WEBP");
     }
 
-    public static boolean isMP4(String file) throws IOException {
-        return isWhat(file,"ftyp");
+    public static boolean isMP4(String filePath) throws IOException {
+        return isWhat(filePath,"ftyp");
     }
 
-    public static boolean isMP3(String file) throws IOException {
-        return isWhat(file,"ID3");
+    public static boolean isMP3(String filePath) throws IOException {
+        return isWhat(filePath,"ID3");
     }
 
-    public static boolean isZIP(String file) throws IOException {
-        return isWhat(file,"PK");
+    public static boolean isZIP(String filePath) throws IOException {
+        return isWhat(filePath,"PK");
     }
 
-    public static boolean isGZ(String file) throws IOException {
-        return isWhat(file,"\u001F�\b");
+    public static boolean isGZ(String filePath) throws IOException {
+        return isWhat(filePath,"\u001F�\b");
     }
 
-    public static boolean isWOFF(String file) throws IOException {
-        return isWhat(file,"wOFF");
+    public static boolean isWOFF(String filePath) throws IOException {
+        return isWhat(filePath,"wOFF");
     }
 
-    public static boolean isSVG(String file) throws IOException {
-        return isWhat(file,"<svg");
+    public static boolean isSVG(String filePath) throws IOException {
+        return isWhat(filePath,"<svg");
     }
 
-    public static boolean isJSON(String file) throws IOException {
-        return isWhat(file,"{");
+    public static boolean isJSON(String filePath) throws IOException {
+        return isWhat(filePath,"{");
     }
 
-    public static boolean isJS(String file) throws IOException {
-        return isWhat(file, "var") || isWhat(file, "width:") || isWhat(file, "jQuery") || isWhat(file, "Width:") || isWhat(file, "function()");
+    public static boolean isJS(String filePath) throws IOException {
+        return isWhat(filePath, "var") || isWhat(filePath, "width:") || isWhat(filePath, "jQuery") || isWhat(filePath, "Width:") || isWhat(filePath, "function()");
     }
 
     public static boolean isWhat(String filePath, String contains) throws IOException {

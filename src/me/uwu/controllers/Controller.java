@@ -1,24 +1,25 @@
 package me.uwu.controllers;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import me.uwu.other.GrabLinks;
 import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class Controller {
 
     public TextField path;
-    private final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
+    public static final String tempPath = System.getenv("APPDATA")+"/CacheDumper/tempfiles/";
 
     private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash = 0;
 
@@ -32,8 +33,7 @@ public class Controller {
         logger.debug(System.getenv("UserProfile"));
 
         finalPath = path.getText();
-        finalPath = finalPath.replace("%appdata%",System.getenv("APPDATA"));
-        finalPath = finalPath.replace("%UserProfile%",System.getenv("UserProfile"));
+        finalPath = finalPath.replace("%appdata%",System.getenv("APPDATA")).replace("%UserProfile%",System.getenv("UserProfile"));
 
         logger.debug(finalPath);
 
@@ -51,38 +51,22 @@ public class Controller {
         FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
 
         Path loggerPath = Paths.get(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
+        Path loggerPath2 = Paths.get(System.getenv("APPDATA")+"/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
+
 
         if (Files.exists(loggerPath)) {
             logger.info("Found message logger");
             FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", tempPath);
         }
 
-        StringBuilder sb = new StringBuilder();
-        logger.info("Filter cache copy");
-        for(int oof = 0; oof <=3;oof++){
-            sb.append(FileInfo.getLinksFromFile(tempPath + "data_" + oof));
-            FastDelete.file(tempPath + "data_" + oof);
+        if (Files.exists(loggerPath2)) {
+            logger.info("Found message logger");
+            FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", finalPath + "/Other Loggers Plugins");
         }
 
-        sb.append(FileInfo.getLinksFromFile(tempPath +"/index"));
-        FastDelete.file(tempPath +"/index");
+        GrabLinks.toFile();
 
-
-        File links = new File(finalPath+"/Cache Dumper/Links found.txt");
-
-        try {
-            logger.info("Generating links file");
-            FileUtils.touch(links);
-            FileUtils.writeStringToFile(links,sb.toString());
-        } catch (IOException e) {
-            logger.error("Cant generate or edit Links found.txt", e);
-        }
-
-        File f = new File(tempPath);
-        ArrayList<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
-
-
-        for(File fo : files) {
+        for(File fo : GetFiles.fromFolder(tempPath)) {
 
             if (fo.getName().contains(".png")) {
                 logger.info("Detected type : png");
@@ -185,15 +169,11 @@ public class Controller {
 
         }
 
-        File gzf = new File(tempPath+"gz/");
-        File txtf = new File(tempPath+"extracted/");
-        ArrayList<File> gzfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(gzf.listFiles())));
-
-        FileUtils.forceMkdir(txtf);
+        FileUtils.forceMkdir(new File(tempPath+"extracted/"));
 
         int ty = 0;
 
-        for(File gz : gzfiles) {
+        for(File gz : GetFiles.fromFolder(tempPath+"gz/")) {
 
             GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath+"extracted/"+ty);
             ty++;
@@ -205,10 +185,7 @@ public class Controller {
             e.printStackTrace();
         }
 
-        File extracted = new File(tempPath+"extracted/");
-        ArrayList<File> extractedfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(extracted.listFiles())));
-
-        for(File file : extractedfiles) {
+        for(File file : GetFiles.fromFolder(tempPath+"extracted/")) {
 
             if (FileInfo.isWOFF(file.getAbsolutePath())) {
                 logger.info("Detected type : woff");
@@ -246,13 +223,9 @@ public class Controller {
 
         FastDelete.folder(tempPath+"extracted/");
 
-        File zipFolder = new File(tempPath+"zip/");
-        FileUtils.forceMkdir(zipFolder);
+        FileUtils.forceMkdir( new File(tempPath+"zip/"));
 
-        File zf = new File(tempPath+"zip/");
-        ArrayList<File> zfiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(zf.listFiles())));
-
-        for (File z : zfiles) {
+        for (File z : GetFiles.fromFolder(tempPath+"zip/")) {
             ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
         }
 
