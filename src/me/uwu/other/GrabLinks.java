@@ -1,8 +1,8 @@
 package me.uwu.other;
 
 import me.uwu.controllers.Controller;
-import me.uwu.utils.FastDelete;
 import me.uwu.utils.FileInfo;
+import me.uwu.utils.FastDelete;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -16,7 +16,7 @@ public class GrabLinks {
     public static void toFile () throws IOException {
 
         StringBuilder sb = new StringBuilder();
-        logger.info("Filter cache copy");
+        logger.info("Filter cache copy & grabbing links");
         for(int oof = 0; oof <=3;oof++){
             sb.append(FileInfo.getLinksFromFile(Controller.tempPath + "data_" + oof));
             FastDelete.file(Controller.tempPath + "data_" + oof);
@@ -26,10 +26,10 @@ public class GrabLinks {
         FastDelete.file(Controller.tempPath +"/index");
 
 
-        File links = new File(Controller.tempPath+"/Cache Dumper/Links found.txt");
+        File links = new File(Controller.finalPath+"/Cache Dumper/Links found.txt");
 
         try {
-            logger.info("Generating links file");
+            logger.info("Generating links file to " + links.getAbsolutePath());
             FileUtils.touch(links);
             FileUtils.writeStringToFile(links,sb.toString());
         } catch (IOException e) {

@@ -21,6 +21,7 @@ public class Controller {
 
     public TextField path;
     public static final String tempPath = System.getenv("APPDATA") + "/CacheDumper/tempfiles/";
+    public static String finalPath;
 
     private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash, plugins, plconfig, themes, dataB, ico, log = 0;
     private boolean betterDiscord = false;
@@ -28,9 +29,9 @@ public class Controller {
     private static final Logger logger = Logger.getLogger(Controller.class);
 
     @FXML
-    protected void dumpThis() throws IOException{
+    protected void dumpThis() throws IOException, InterruptedException {
 
-        String finalPath;
+
         logger.debug(path.getText());
 
         logger.debug(System.getenv("UserProfile"));
@@ -85,7 +86,7 @@ public class Controller {
 
             if (Files.exists(loggerPath)) {
                 logger.info("Found message logger");
-                FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", finalPath + "/Other Loggers Plugins");
+                FastCopy.folder(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE", tempPath);
             }
         }
 
@@ -142,106 +143,79 @@ public class Controller {
         GrabLinks.toFile();
 
         for(File fo : GetFiles.fromFolder(tempPath)) {
-
-            if (fo.getName().contains(".png")) {
-                logger.info("Detected type : png");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                png++;
-            } else
-
-            if (fo.getName().contains(".jpg")) {
-                logger.info("Detected type : jpg");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                jpg++;
-            } else
-
-            if (fo.getName().contains(".gif")) {
-                logger.info("Detected type : gif");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                gif++;
-            } else
-
-
-
-
-            if (FileInfo.isPNG(fo.getAbsolutePath())) {
-                logger.info("Detected type : png");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"png/"+fo.getName()+".png");
-                FastDelete.file(fo.getAbsolutePath());
-                png++;
-            } else
-
-            if (FileInfo.isJPG(fo.getAbsolutePath())) {
-                logger.info("Detected type : jpg");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"jpg/"+fo.getName()+".jpg");
-                FastDelete.file(fo.getAbsolutePath());
-                jpg++;
-            } else
-
-            if (FileInfo.isGIF(fo.getAbsolutePath())) {
-                logger.info("Detected type : gif");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"gif/"+fo.getName()+".gif");
-                FastDelete.file(fo.getAbsolutePath());
-                gif++;
-            } else
-
-            if (FileInfo.isWEBM(fo.getAbsolutePath())) {
-                logger.info("Detected type : webm");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"webm/"+fo.getName()+".webm");
-                FastDelete.file(fo.getAbsolutePath());
-                webm++;
-            } else
-
-            if (FileInfo.isWEBP(fo.getAbsolutePath())) {
-                logger.info("Detected type : webp");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"webp/"+fo.getName()+".webp");
-                FastDelete.file(fo.getAbsolutePath());
-                webp++;
-            } else
-
-            if (FileInfo.isMP3(fo.getAbsolutePath())) {
-                logger.info("Detected type : mp3");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp3/"+fo.getName()+".mp3");
-                FastDelete.file(fo.getAbsolutePath());
-                mp3++;
-            } else
-
-            if (FileInfo.isGZ(fo.getAbsolutePath())) {
-                logger.info("Detected type : gz");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"gz/"+fo.getName()+".gz");
-                FastDelete.file(fo.getAbsolutePath());
-                gz++;
-            } else
-
-            if (FileInfo.isZIP(fo.getAbsolutePath())) {
-                logger.info("Detected type : zip");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"zip/"+fo.getName()+".zip");
-                FastDelete.file(fo.getAbsolutePath());
-                zip++;
-            } else
-
-            if (FileInfo.isMP4(fo.getAbsolutePath())) {
-                logger.info("Detected type : mp4");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"mp4/"+fo.getName()+".mp4");
-                FastDelete.file(fo.getAbsolutePath());
-                mp4++;
-            } else
-
-            if (FileInfo.isTrashFile(fo.getPath())) {
-                logger.info("Detected trash file");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"Intentional trash files/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                trash++;
-            } else {
-                logger.info("Unable to fine what kind of file it's :/");
-                FastCopy.file(fo.getAbsolutePath(), tempPath+"unknown/"+fo.getName());
-                FastDelete.file(fo.getAbsolutePath());
-                other++;
+            if(!fo.isDirectory()) {
+                if (fo.getName().contains(".png")) {
+                    logger.info("Detected type : png");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "png/" + fo.getName());
+                    FastDelete.file(fo.getAbsolutePath());
+                    png++;
+                } else if (fo.getName().contains(".jpg")) {
+                    logger.info("Detected type : jpg");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "jpg/" + fo.getName());
+                    FastDelete.file(fo.getAbsolutePath());
+                    jpg++;
+                } else if (fo.getName().contains(".gif")) {
+                    logger.info("Detected type : gif");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "gif/" + fo.getName());
+                    FastDelete.file(fo.getAbsolutePath());
+                    gif++;
+                } else if (FileInfo.isPNG(fo.getAbsolutePath())) {
+                    logger.info("Detected type : png");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "png/" + fo.getName() + ".png");
+                    FastDelete.file(fo.getAbsolutePath());
+                    png++;
+                } else if (FileInfo.isJPG(fo.getAbsolutePath())) {
+                    logger.info("Detected type : jpg");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "jpg/" + fo.getName() + ".jpg");
+                    FastDelete.file(fo.getAbsolutePath());
+                    jpg++;
+                } else if (FileInfo.isGIF(fo.getAbsolutePath())) {
+                    logger.info("Detected type : gif");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "gif/" + fo.getName() + ".gif");
+                    FastDelete.file(fo.getAbsolutePath());
+                    gif++;
+                } else if (FileInfo.isWEBM(fo.getAbsolutePath())) {
+                    logger.info("Detected type : webm");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "webm/" + fo.getName() + ".webm");
+                    FastDelete.file(fo.getAbsolutePath());
+                    webm++;
+                } else if (FileInfo.isWEBP(fo.getAbsolutePath())) {
+                    logger.info("Detected type : webp");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "webp/" + fo.getName() + ".webp");
+                    FastDelete.file(fo.getAbsolutePath());
+                    webp++;
+                } else if (FileInfo.isMP3(fo.getAbsolutePath())) {
+                    logger.info("Detected type : mp3");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "mp3/" + fo.getName() + ".mp3");
+                    FastDelete.file(fo.getAbsolutePath());
+                    mp3++;
+                } else if (FileInfo.isGZ(fo.getAbsolutePath())) {
+                    logger.info("Detected type : gz");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "gz/" + fo.getName() + ".gz");
+                    FastDelete.file(fo.getAbsolutePath());
+                    gz++;
+                } else if (FileInfo.isZIP(fo.getAbsolutePath())) {
+                    logger.info("Detected type : zip");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "zip/" + fo.getName() + ".zip");
+                    FastDelete.file(fo.getAbsolutePath());
+                    zip++;
+                } else if (FileInfo.isMP4(fo.getAbsolutePath())) {
+                    logger.info("Detected type : mp4");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "mp4/" + fo.getName() + ".mp4");
+                    FastDelete.file(fo.getAbsolutePath());
+                    mp4++;
+                } else if (FileInfo.isTrashFile(fo.getPath())) {
+                    logger.info("Detected trash file");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "Intentional trash files/" + fo.getName());
+                    FastDelete.file(fo.getAbsolutePath());
+                    trash++;
+                } else {
+                    logger.info("Unable to fine what kind of file it's :/");
+                    FastCopy.file(fo.getAbsolutePath(), tempPath + "unknown/" + fo.getName());
+                    FastDelete.file(fo.getAbsolutePath());
+                    other++;
+                }
             }
-
         }
 
         FileUtils.forceMkdir(new File(tempPath+"extracted/"));
@@ -296,7 +270,7 @@ public class Controller {
 
         }
 
-        FastDelete.folder(tempPath+"extracted/");
+        FastDelete.folder(tempPath+"/extracted/");
 
         FileUtils.forceMkdir( new File(tempPath+"zip/"));
 
@@ -304,11 +278,12 @@ public class Controller {
             ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
         }
 
-        FastCopy.folder(System.getenv("APPDATA")+"/CacheDumper/tempfiles",finalPath+"/Cache Dumper");
-        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
+        FastCopy.folder(tempPath,finalPath+"/Cache Dumper");
+
+        Thread.sleep(500); // for slow computer    me demande pas pourquoi je sais pas mais ca fix certains fichiers qui se deletent avant la cope :/
+        //et oui je conjuge delete a la 3eme personne du pluriel mais de toutes facon qui vas lire ca a part toi ?
 
         FastDelete.folder(tempPath);
-        FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
         logger.info("Succesfully dumped");
 

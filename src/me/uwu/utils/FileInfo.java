@@ -71,10 +71,6 @@ public class FileInfo {
     public static boolean isWhat(String filePath, String contains) throws IOException {
 
         File f = new File(filePath);
-        if (f.length() ==0){
-            logger.warn("File is null");
-            return false;
-        }
 
         FileInputStream inputStream = null;
         Scanner sc = null;
@@ -82,6 +78,14 @@ public class FileInfo {
         try {
             inputStream = new FileInputStream(filePath);
             sc = new Scanner(inputStream, "UTF-8");
+
+            if (f.length() ==0){
+                logger.warn("File is null");
+                inputStream.close();
+                sc.close();
+                return false;
+            }
+
 
             String line = sc.nextLine();
             logger.debug("First line of the file is : " + line);
