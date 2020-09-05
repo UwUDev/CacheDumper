@@ -35,7 +35,7 @@ Cache_Dumper
 And just run Cache_Dumper.jar
 
 
-**/!\ Dont worry if the program doesn't respond it's just checking if file is .png . gif etc...**
+**/!\ Dont worry if the program doesn't respond it's just checking if file is .png .gif etc...**
 
 ## Built With
 
