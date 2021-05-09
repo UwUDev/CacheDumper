@@ -1,6 +1,7 @@
 package me.uwu.other;
 
 import me.uwu.controllers.Controller;
+import me.uwu.controllers.Dumper;
 import me.uwu.utils.FileInfo;
 import me.uwu.utils.FastDelete;
 import org.apache.commons.io.FileUtils;
@@ -18,15 +19,15 @@ public class GrabLinks {
         StringBuilder sb = new StringBuilder();
         logger.info("Filter cache copy & grabbing links");
         for(int oof = 0; oof <=3;oof++){
-            sb.append(FileInfo.getLinksFromFile(Controller.tempPath + "data_" + oof));
-            FastDelete.file(Controller.tempPath + "data_" + oof);
+            sb.append(FileInfo.getLinksFromFile(Dumper.tempPath + "data_" + oof));
+            FastDelete.file(Dumper.tempPath + "data_" + oof);
         }
 
-        sb.append(FileInfo.getLinksFromFile(Controller.tempPath +"/index"));
-        FastDelete.file(Controller.tempPath +"/index");
+        sb.append(FileInfo.getLinksFromFile(Dumper.tempPath +"/index"));
+        FastDelete.file(Dumper.tempPath +"/index");
 
 
-        File links = new File(Controller.finalPath+"/Cache Dumper/Links found.txt");
+        File links = new File(Dumper.finalPath+"/Cache Dumper/Links found.txt");
 
         try {
             logger.info("Generating links file to " + links.getAbsolutePath());
