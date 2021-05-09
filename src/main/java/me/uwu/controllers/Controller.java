@@ -2,7 +2,11 @@ package me.uwu.controllers;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import me.uwu.Main;
 import me.uwu.other.GrabLinks;
 import me.uwu.utils.*;
 import org.apache.commons.io.FileUtils;
@@ -13,20 +17,29 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable {
 
     public TextField path;
     public static final String tempPath = System.getenv("APPDATA") + "/CacheDumper/tempfiles/";
     public static String finalPath;
+    public ImageView settingsBtn;
 
     private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash, plugins, plconfig, themes, dataB, ico, log = 0;
     private boolean betterDiscord = false;
 
     private static final Logger logger = Logger.getLogger(Controller.class);
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        settingsBtn.setImage(new Image(Main.class.getResourceAsStream("settings.png")));
+        settingsBtn.setOnMouseClicked(e -> System.out.println("Settings"));
+    }
 
     @FXML
     protected void dumpThis() throws IOException, InterruptedException {
@@ -331,21 +344,21 @@ public class Controller {
     }
 
       public void cleanThis() throws IOException, InterruptedException {
-          FastDelete.folder(System.getenv("APPDATA")+"/CacheDumper");
+          FastDelete.folder(System.getenv("APPDATA") + "/CacheDumper");
 
-          FileUtils.forceMkdir(new File(System.getenv("APPDATA")+"/CacheDumper"));
+          FileUtils.forceMkdir(new File(System.getenv("APPDATA") + "/CacheDumper"));
 
           Thread.sleep(1000);
 
           BufferedWriter writer = null;
 
           try {
-              File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+              File logFile = new File(System.getenv("APPDATA") + "/CacheDumper/cleaned ;).txt");
 
               logger.debug(logFile.getCanonicalPath());
 
               writer = new BufferedWriter(new FileWriter(logFile));
-              writer.write("Successfully cleaned backups and temporary files of cache dumper"+ TimeUtils.dateAndTime());
+              writer.write("Successfully cleaned backups and temporary files of cache dumper" + TimeUtils.dateAndTime());
           } catch (Exception e) {
               e.printStackTrace();
           } finally {
@@ -355,7 +368,7 @@ public class Controller {
               } catch (Exception ignored) {
               }
           }
-          File logFile = new File(System.getenv("APPDATA")+"/CacheDumper/cleaned ;).txt");
+          File logFile = new File(System.getenv("APPDATA") + "/CacheDumper/cleaned ;).txt");
           Desktop.getDesktop().edit(logFile);
       }
-    }
+}

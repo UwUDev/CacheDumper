@@ -15,12 +15,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("UwU.fxml"));
         primaryStage.setTitle("Cache Dumper by UwU#0001");
-        primaryStage.setScene(new Scene(root, 1270, 710));
+        primaryStage.setScene(new Scene(root, 518, 630));
         primaryStage.show();
         primaryStage.resizableProperty().set(false);
 
     }
-
 
     public static void main(String[] args) {
         logger.info("Creating window");
