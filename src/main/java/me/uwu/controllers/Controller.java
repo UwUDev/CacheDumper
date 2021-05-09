@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import me.uwu.Dumper;
 import me.uwu.Main;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,7 @@ public class Controller implements Initializable {
     @FXML
     protected void dumpThis() throws IOException {
         Dumper dumper = new Dumper();
-        dumper.dump(path);
+        dumper.dump(path.getText());
     }
 
     public void cleanThis() throws IOException {

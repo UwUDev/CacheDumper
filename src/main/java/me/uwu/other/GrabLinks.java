@@ -1,7 +1,6 @@
 package me.uwu.other;
 
-import me.uwu.controllers.Controller;
-import me.uwu.controllers.Dumper;
+import me.uwu.Dumper;
 import me.uwu.utils.FileInfo;
 import me.uwu.utils.FastDelete;
 import org.apache.commons.io.FileUtils;

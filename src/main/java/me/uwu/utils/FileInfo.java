@@ -113,15 +113,11 @@ public class FileInfo {
 
     }
 
-    public static boolean isTrashFile(String filePath){
+    public static boolean isTrashFile(File f){
         boolean isTrash = false;
-        File f = new File(filePath);
-
         logger.debug("File size is : " + f.length());
-
         if (f.length() == 1048576 || f.length() == 1048344) isTrash = true;
         //1048344 c'est quand windows compresse les dossier avec les fleches bleues
-
         return isTrash;
     }
 
