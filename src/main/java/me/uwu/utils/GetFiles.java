@@ -12,18 +12,19 @@ public class GetFiles {
         return new ArrayList<>(Arrays.asList(Objects.requireNonNull(f.listFiles())));
     }
 
-    public static ArrayList<File> fromSubolders(String folderPath) {
-        ArrayList<File> filesArray = new ArrayList<File>();
+    public static ArrayList<File> fromSubFolders(String folderPath) {
+        ArrayList<File> filesArray = new ArrayList<>();
         File folder = new File(folderPath);
         File[] files = folder.listFiles();
 
+        if (files != null)
         for (File file : files)
         {
             if (file.isFile()) {
                 filesArray.add(file);
             }
             else if (file.isDirectory()) {
-                filesArray.addAll(fromSubolders(file.getAbsolutePath()));
+                filesArray.addAll(fromSubFolders(file.getAbsolutePath()));
             }
         }
         return filesArray;

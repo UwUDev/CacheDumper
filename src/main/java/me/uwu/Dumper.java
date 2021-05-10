@@ -23,7 +23,7 @@ public class Dumper {
     public static final String tempPath = System.getenv("APPDATA") + "/CacheDumper/tempfiles/";
     public static String finalPath;
     //private int png, jpg, gif, mp3, mp4, gz, zip, webm, webp, font, js, json, svg, other, trash, plugins, plconfig, themes, dataB, ico, log = 0;
-    private Map<String, Integer> stats = new HashMap<>();
+    private final Map<String, Integer> stats = new HashMap<>();
     private boolean betterDiscord = false;
 
     public void dump(String path) throws IOException {
@@ -47,7 +47,7 @@ public class Dumper {
 
         if (betterDiscord) {
 
-            for (File pl : GetFiles.fromFolder(bdPath.toString() + "/plugins")) {
+            for (File pl : GetFiles.fromFolder(bdPath + "/plugins")) {
                 if (pl.getName().contains(".json")) {
                     System.out.println("Detected BD plugin config");
                     FastCopy.file(pl.getAbsolutePath(), tempPath + "plugins/configs/" + pl.getName());
@@ -59,14 +59,14 @@ public class Dumper {
                 }
             }
 
-            for (File th : GetFiles.fromFolder(bdPath.toString() + "/themes")) {
+            for (File th : GetFiles.fromFolder(bdPath + "/themes")) {
                 System.out.println("Detected BD theme");
                 FastCopy.file(th.getAbsolutePath(), tempPath + "themes/" + th.getName());
                 incrementStats("themes");
             }
 
-            FastCopy.file(bdPath.toString() + "/emote_data.json", tempPath + "json/emote_data.json");
-            FastCopy.file(bdPath.toString() + "/bdstorage.json", tempPath + "json/bdstorage.json");
+            FastCopy.file(bdPath + "/emote_data.json", tempPath + "json/emote_data.json");
+            FastCopy.file(bdPath + "/bdstorage.json", tempPath + "json/bdstorage.json");
 
             if (Files.exists(loggerPath)) {
                 System.out.println("Found message logger");
