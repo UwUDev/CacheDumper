@@ -26,7 +26,7 @@ public class Dumper {
     private final Map<String, Integer> stats = new HashMap<>();
     private boolean betterDiscord = false;
 
-    public void dump(String path) throws IOException {
+    public void dump(String path, boolean keepUnknown, boolean others) throws IOException {
         setupMap();
 
         finalPath = path;
@@ -41,7 +41,7 @@ public class Dumper {
         Path bdPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/");
         Path loggerPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
 
-        if (Files.exists(bdPath)) {
+        if (Files.exists(bdPath) && others) {
             betterDiscord = true;
         }
 
@@ -79,27 +79,29 @@ public class Dumper {
         }
 
         Filter filter0 = new Filter(stats, GetFiles.fromFolder(tempPath + "/temp"), tempPath);
-        filter0.filter();
+        filter0.filter(keepUnknown);
 
         FastDelete.folder(tempPath + "/temp");
 
-        GrabLinks.toFile();
+        if (others)
+            GrabLinks.toFile();
 
         Filter filter1 = new Filter(stats, GetFiles.fromFolder(tempPath), tempPath);
-        filter1.filter();
+        filter1.filter(keepUnknown);
 
         FileUtils.forceMkdir(new File(tempPath+"extracted/"));
 
         int ty = 0;
 
-        try {
-            for(File gz : GetFiles.fromFolder(tempPath+"gz/")) {
-
-                GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath+"extracted/"+ty);
-                ty++;
+        if (others) {
+            try {
+                for (File gz : GetFiles.fromFolder(tempPath + "gz/")) {
+                    GZipUtils.unGzipFile(gz.getAbsolutePath(), tempPath + "extracted/" + ty);
+                    ty++;
+                }
+            } catch (Exception e) {
+                System.out.println("No gz");
             }
-        } catch (Exception e){
-            System.out.println("No gz");
         }
 
 
@@ -110,18 +112,20 @@ public class Dumper {
         }
 
         Filter filter2 = new Filter(stats, GetFiles.fromFolder(tempPath+"extracted/"), tempPath);
-        filter2.filter();
+        filter2.filter(keepUnknown);
 
         FastDelete.folder(tempPath+"/extracted/");
 
-        FileUtils.forceMkdir( new File(tempPath+"zip/"));
+        if (others) {
+            FileUtils.forceMkdir(new File(tempPath + "zip/"));
 
-        for (File z : GetFiles.fromFolder(tempPath+"zip/")) {
-            ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
+            for (File z : GetFiles.fromFolder(tempPath + "zip/")) {
+                ZipUtils.unzip(z.getAbsolutePath(), tempPath + "Discord update files/");
+            }
         }
 
         Filter filter3 = new Filter(stats, GetFiles.fromFolder(tempPath), tempPath);
-        filter3.filter();
+        filter3.filter(keepUnknown);
 
         FastCopy.folder(tempPath,finalPath+"/Cache Dumper");
 

@@ -36,13 +36,13 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <CheckBox layoutX="65.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Images" textFill="WHITE" />
-            <CheckBox layoutX="229.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Videos" textFill="WHITE" />
-            <CheckBox layoutX="377.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Audios" textFill="WHITE" />
-            <CheckBox layoutX="65.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Logs" textFill="WHITE" />
-            <CheckBox layoutX="229.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Database" textFill="WHITE" />
-            <CheckBox layoutX="377.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="Other" textFill="WHITE" />
-            <Button fx:id="dump" layoutX="80.0" layoutY="421.0" mnemonicParsing="false" onAction="#dumpThis" prefHeight="54.0" prefWidth="358.0" style="-fx-background-color: #A3BE8C;" text="DUMP !">
+            <CheckBox fx:id="checkImages" layoutX="65.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Images" textFill="WHITE" />
+            <CheckBox fx:id="checkVideos" layoutX="229.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Videos" textFill="WHITE" />
+            <CheckBox fx:id="checkAudios" layoutX="377.0" layoutY="297.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Audios" textFill="WHITE" />
+            <CheckBox fx:id="checkLogs" layoutX="65.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Logs" textFill="WHITE" />
+            <CheckBox fx:id="checkDbs" layoutX="229.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Database" textFill="WHITE" />
+            <CheckBox fx:id="checkOthers" layoutX="377.0" layoutY="337.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" selected="true" text="Other" textFill="WHITE" />
+            <Button layoutX="80.0" layoutY="421.0" mnemonicParsing="false" onAction="#dumpThis" prefHeight="54.0" prefWidth="358.0" style="-fx-background-color: #A3BE8C;" text="DUMP !">
                <font>
                   <Font size="25.0" />
                </font>
