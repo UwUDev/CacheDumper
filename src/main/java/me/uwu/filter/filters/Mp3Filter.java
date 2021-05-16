@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Mp3Filter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"ID3");
+        return headerContains(file,"ID3");
     }
 
     @Override

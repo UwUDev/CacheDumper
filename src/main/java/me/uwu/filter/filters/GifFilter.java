@@ -8,7 +8,7 @@ import java.io.IOException;
 public class GifFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"GIF");
+        return headerContains(file,"GIF");
     }
 
     @Override

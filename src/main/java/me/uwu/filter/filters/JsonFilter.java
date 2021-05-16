@@ -8,7 +8,7 @@ import java.io.IOException;
 public class JsonFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file, "{") || isWhat(file, "[");
+        return headerContains(file, "{") || headerContains(file, "[");
     }
 
     @Override

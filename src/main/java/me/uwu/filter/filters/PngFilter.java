@@ -8,7 +8,7 @@ import java.io.IOException;
 public class PngFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file, "PNG");
+        return headerContains(file, "PNG");
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class JsFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file, "var") || isWhat(file, "width:") || isWhat(file, "jQuery") || isWhat(file, "Width:") || isWhat(file, "function()");
+        return headerContains(file, "var") || headerContains(file, "width:") || headerContains(file, "jQuery") || headerContains(file, "Width:") || headerContains(file, "function()");
     }
 
     @Override

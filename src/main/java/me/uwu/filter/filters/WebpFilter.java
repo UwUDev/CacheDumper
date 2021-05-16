@@ -8,7 +8,7 @@ import java.io.IOException;
 public class WebpFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"WEBP");
+        return headerContains(file,"WEBP");
     }
 
     @Override

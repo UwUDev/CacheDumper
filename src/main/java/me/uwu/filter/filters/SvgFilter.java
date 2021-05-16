@@ -8,7 +8,7 @@ import java.io.IOException;
 public class SvgFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"<svg");
+        return headerContains(file,"<svg");
     }
 
     @Override

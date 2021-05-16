@@ -11,7 +11,7 @@ public interface IFilter {
     public boolean isValid(File file) throws IOException;
     public String getName();
 
-    default boolean isWhat(File f, String contains) throws IOException {
+    default boolean headerContains(File f, String contains) throws IOException {
 
         FileInputStream inputStream = null;
         Scanner sc = null;

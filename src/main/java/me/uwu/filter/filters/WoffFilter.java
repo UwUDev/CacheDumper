@@ -8,7 +8,7 @@ import java.io.IOException;
 public class WoffFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"wOFF");
+        return headerContains(file,"wOFF");
     }
 
     @Override

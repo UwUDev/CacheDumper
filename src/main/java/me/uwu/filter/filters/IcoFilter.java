@@ -8,7 +8,7 @@ import java.io.IOException;
 public class IcoFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file, "\n\t\t\t\t\t\tnullezyfuzYGFZEKJGFJZFEHJEGFKZEJGFJHDSGFKJGkjhsdgfKSGDF87SOD8DS7FS8DGF");
+        return headerContains(file, "\n\t\t\t\t\t\tnullezyfuzYGFZEKJGFJZFEHJEGFKZEJGFJHDSGFKJGkjhsdgfKSGDF87SOD8DS7FS8DGF");
     }
 
     @Override

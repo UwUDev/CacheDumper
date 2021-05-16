@@ -5,14 +5,14 @@ import me.uwu.filter.IFilter;
 import java.io.File;
 import java.io.IOException;
 
-public class Mp4Filter implements IFilter {
+public class LdbFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return headerContains(file,"ftyp");
+        return headerContains(file, "SQLite") || headerContains(file, "sqlite");
     }
 
     @Override
     public String getName() {
-        return "mp4";
+        return "ldb";
     }
 }

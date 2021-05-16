@@ -8,7 +8,7 @@ import java.io.IOException;
 public class GzFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"\u001F�\b");
+        return headerContains(file,"\u001F�\b");
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DbFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file, "JsFilter");
+        return headerContains(file, "JsFilter");
     }
 
     @Override

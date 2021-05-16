@@ -64,8 +64,10 @@ public class Controller implements Initializable {
         if (checkAudios.isSelected())
             filters.add(new Mp3Filter());
 
-        if (checkDbs.isSelected())
+        if (checkDbs.isSelected()) {
             filters.add(new DbFilter());
+            filters.add(new LdbFilter());
+        }
 
         if (checkLogs.isSelected())
             filters.add(new LogFilter());

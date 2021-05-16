@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ZipFilter implements IFilter {
     @Override
     public boolean isValid(File file) throws IOException {
-        return isWhat(file,"PK");
+        return headerContains(file,"PK");
     }
 
     @Override
