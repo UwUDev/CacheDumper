@@ -1,9 +1,7 @@
 package me.uwu.controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,8 +18,9 @@ public class WaitingController implements Initializable {
         stats2.setText("gif: 0\nico 0\njs: 0\nlog: 0\nmp4: 0\nsvg: 0\nwebp: 0\nzip: 0");
     }
 
-    public void cancel(MouseEvent mouseEvent) {
+    public void cancel() {
         try {
+            //noinspection deprecation
             Controller.dumpThread.stop(); //needed
         } catch (NullPointerException ex) {
             ex.printStackTrace();

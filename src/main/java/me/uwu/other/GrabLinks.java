@@ -26,6 +26,7 @@ public class GrabLinks {
         try {
             System.out.println("Generating links file to " + links.getAbsolutePath());
             FileUtils.touch(links);
+            //noinspection deprecation
             FileUtils.writeStringToFile(links,sb.toString());
         } catch (IOException e) {
             System.out.println("Cant generate or edit Links found.txt");

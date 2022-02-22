@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 public class FileInfo {
 
     public static boolean isTrashFile(File f){
-        //1048344 c'est quand windows compresse les dossier avec les fleches bleues
         return f.length() == 1048576 || f.length() == 1048344;
     }
 
+    @SuppressWarnings("RegExpRedundantEscape")
     private static final Pattern urlPattern = Pattern.compile(
             "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
                     + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"

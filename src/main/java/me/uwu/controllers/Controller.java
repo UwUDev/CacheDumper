@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -45,6 +44,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //noinspection ConstantConditions
         settingsBtn.setImage(new Image(Main.class.getResourceAsStream("settings.png")));
         settingsBtn.setOnMouseClicked(e -> {
             System.out.println("Settings");
@@ -125,6 +125,7 @@ public class Controller implements Initializable {
         dialog.initStyle(StageStyle.UNDECORATED);
         dialog.initOwner(Main.getPrimaryStage());
         URL url = Main.class.getResource("UwUwait.fxml");
+        //noinspection ConstantConditions
         System.out.println(url.getFile());
         Parent root = FXMLLoader.load(url);
         Label label = new Label("0");
@@ -139,18 +140,6 @@ public class Controller implements Initializable {
         System.out.println(labelStats1.getText());
         dialog.getScene().getStylesheets().add(String.valueOf(Main.class.getResource("style.css")));
         dialog.setResizable(false);
-
-        /*new Thread(() -> {
-            for (int i = 0; i < 1000; i++) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                int finalI = i;
-                Platform.runLater(() -> statsLabel.setText(String.valueOf(finalI)));
-            }
-        }).start();*/
 
         dialog.show();
     }

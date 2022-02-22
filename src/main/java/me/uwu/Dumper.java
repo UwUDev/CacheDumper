@@ -178,6 +178,8 @@ public class Dumper {
                     "\n\nTotal of unknown files : " + stats.get("other") +
                     "\n\n\n\nTotal dumped files : " + total.get();
             FileUtils.touch(statsis);
+
+            //noinspection deprecation
             FileUtils.writeStringToFile(statsis, statsData.replace("null", "0"));
         } catch (IOException e) {
             System.out.println("Cant generate or edit stats.txt");
@@ -223,30 +225,6 @@ public class Dumper {
         }
         File logFile = new File(System.getenv("APPDATA") + "/CacheDumper/cleaned ;).txt");
         Desktop.getDesktop().edit(logFile);
-    }
-
-    private void setupMap(){
-        stats.put("png", 0);
-        stats.put("jpg", 0);
-        stats.put("gif", 0);
-        stats.put("mp3", 0);
-        stats.put("mp4", 0);
-        stats.put("gz", 0);
-        stats.put("zip", 0);
-        stats.put("webm", 0);
-        stats.put("webp", 0);
-        stats.put("font", 0);
-        stats.put("js", 0);
-        stats.put("json", 0);
-        stats.put("svg", 0);
-        stats.put("other", 0);
-        stats.put("trash", 0);
-        stats.put("plugins", 0);
-        stats.put("plconfig", 0);
-        stats.put("themes", 0);
-        stats.put("dataB", 0);
-        stats.put("ico", 0);
-        stats.put("log", 0);
     }
 
     private void incrementStats(String stat){
