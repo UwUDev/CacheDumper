@@ -1,5 +1,6 @@
 package me.uwu.filter;
 
+import me.uwu.controllers.Controller;
 import me.uwu.utils.FastCopy;
 import me.uwu.utils.FastDelete;
 import me.uwu.utils.FileInfo;
@@ -61,10 +62,15 @@ public class Filter {
                     } else FastDelete.file(file.getAbsolutePath());
                 }
             }
+            Controller.updateStats(stats);
         }
     }
 
     private void incrementStats(String stat){
-        stats.put(stat, stats.get(stat)+1);
+        try {
+            stats.put(stat, stats.get(stat) + 1);
+        } catch (NullPointerException ignored) {
+            stats.put(stat, 1);
+        }
     }
 }

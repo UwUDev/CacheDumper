@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public interface IFilter {
-    public boolean isValid(File file) throws IOException;
-    public String getName();
+    boolean isValid(File file) throws IOException;
+    String getName();
 
     default boolean headerContains(File f, String contains) throws IOException {
 

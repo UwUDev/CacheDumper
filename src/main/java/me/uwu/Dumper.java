@@ -1,5 +1,6 @@
 package me.uwu;
 
+import me.uwu.controllers.Controller;
 import me.uwu.filter.Filter;
 import me.uwu.other.GrabLinks;
 import me.uwu.utils.*;
@@ -27,7 +28,7 @@ public class Dumper {
     private boolean betterDiscord = false;
 
     public void dump(String path, boolean keepUnknown, boolean others) throws IOException {
-        setupMap();
+        //setupMap();
 
         finalPath = path;
         finalPath = finalPath.replace("%appdata%", System.getenv("APPDATA")).replace("%UserProfile%", System.getenv("UserProfile"));
@@ -36,7 +37,7 @@ public class Dumper {
         
         FastDelete.folder(finalPath+"/Cache Dumper");
         
-        FastCopy.folder(System.getenv("APPDATA")+"/discord\\Cache",tempPath);
+        FastCopy.folder(System.getenv("APPDATA")+"/discordcanary\\Cache",tempPath);
 
         Path bdPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/");
         Path loggerPath = Paths.get(System.getenv("APPDATA") + "/BetterDiscord/plugins/MLV2_IMAGE_CACHE");
@@ -47,22 +48,24 @@ public class Dumper {
 
         if (betterDiscord) {
 
-            for (File pl : GetFiles.fromFolder(bdPath + "/plugins")) {
-                if (pl.getName().contains(".json")) {
+            for (File pluginFile : GetFiles.fromFolder(bdPath + "/plugins")) {
+                if (pluginFile.getName().contains(".json")) {
                     System.out.println("Detected BD plugin config");
-                    FastCopy.file(pl.getAbsolutePath(), tempPath + "plugins/configs/" + pl.getName());
+                    FastCopy.file(pluginFile.getAbsolutePath(), tempPath + "plugins/configs/" + pluginFile.getName());
                     incrementStats("plconfig");
-                } else if (pl.getName().contains(".js")) {
+                } else if (pluginFile.getName().contains(".js")) {
                     System.out.println("Detected BD plugin");
-                    FastCopy.file(pl.getAbsolutePath(), tempPath + "plugins/" + pl.getName());
+                    FastCopy.file(pluginFile.getAbsolutePath(), tempPath + "plugins/" + pluginFile.getName());
                     incrementStats("plugins");
                 }
+                Controller.updateStats(stats);
             }
 
-            for (File th : GetFiles.fromFolder(bdPath + "/themes")) {
+            for (File themeFile : GetFiles.fromFolder(bdPath + "/themes")) {
                 System.out.println("Detected BD theme");
-                FastCopy.file(th.getAbsolutePath(), tempPath + "themes/" + th.getName());
+                FastCopy.file(themeFile.getAbsolutePath(), tempPath + "themes/" + themeFile.getName());
                 incrementStats("themes");
+                Controller.updateStats(stats);
             }
 
             FastCopy.file(bdPath + "/emote_data.json", tempPath + "json/emote_data.json");
@@ -74,8 +77,8 @@ public class Dumper {
             }
         }
 
-        for (File ff : GetFiles.fromFolder(System.getenv("APPDATA") + "/discord")) {
-            FastCopy.file(ff.getAbsolutePath(), tempPath + "temp/" + ff.getName());
+        for (File file : GetFiles.fromFolder(System.getenv("APPDATA") + "/discordcanary")) {
+            FastCopy.file(file.getAbsolutePath(), tempPath + "temp/" + file.getName());
         }
 
         Filter filter0 = new Filter(stats, GetFiles.fromFolder(tempPath + "/temp"), tempPath);
@@ -114,7 +117,7 @@ public class Dumper {
         Filter filter2 = new Filter(stats, GetFiles.fromFolder(tempPath+"extracted/"), tempPath);
         filter2.filter(keepUnknown);
 
-        FastDelete.folder(tempPath+"/extracted/");
+        FastDelete.folder(tempPath + "/extracted/");
 
         if (others) {
             FileUtils.forceMkdir(new File(tempPath + "zip/"));
@@ -148,30 +151,34 @@ public class Dumper {
 
         try {
             System.out.println("Generating stats file");
-            FileUtils.touch(statsis);
-            FileUtils.writeStringToFile(statsis,
+            int dbQtt = 0;
+            if (stats.get("dataB") != null && stats.get("ldb") != null)
+                dbQtt = (stats.get("dataB") + stats.get("ldb"));
+            String statsData =
                     "Total .png files : " + stats.get("png") +
-                            "\nTotal .jpg files : " + stats.get("jpg") +
-                            "\nTotal .svg files : " + stats.get("svg") +
-                            "\nTotal .gif files : " + stats.get("gif") +
-                            "\nTotal .mp4 files : " + stats.get("mp4") +
-                            "\nTotal .webm files : " + stats.get("webm") +
-                            "\nTotal .webp files : " + stats.get("webp") +
-                            "\nTotal .mp3 files : " + stats.get("mp3") +
-                            "\nTotal .zip files : " + stats.get("zip") +
-                            "\nTotal trash files : " + stats.get("trash") +
-                            "\nTotal .txt files : " + stats.get("gz") +
-                            "\nTotal .js files : " + stats.get("js") +
-                            "\nTotal databases : " + stats.get("dataB") +
-                            "\nTotal .ico files : " + stats.get("ico") +
-                            "\nTotal .log : " + stats.get("log") +
-                            "\nTotal .json files : " + stats.get("json") +
-                            "\nTotal font files : " + stats.get("font") + " (" + stats.get("font") + " .woff & 0 .tff)" +
-                            "\n\nTotal plugins : " + stats.get("plugins") +
-                            "\nTotal plugins configs : " + stats.get("plconfig") +
-                            "\nTotal themes : " + stats.get("themes") +
-                            "\n\nTotal of unknown files : " + stats.get("other") +
-                            "\n\n\n\nTotal dumped files : " + total.get());
+                    "\nTotal .jpg files : " + stats.get("jpg") +
+                    "\nTotal .svg files : " + stats.get("svg") +
+                    "\nTotal .gif files : " + stats.get("gif") +
+                    "\nTotal .mp4 files : " + stats.get("mp4") +
+                    "\nTotal .webm files : " + stats.get("webm") +
+                    "\nTotal .webp files : " + stats.get("webp") +
+                    "\nTotal .mp3 files : " + stats.get("mp3") +
+                    "\nTotal .zip files : " + stats.get("zip") +
+                    "\nTotal trash files : " + stats.get("trash") +
+                    "\nTotal .txt files : " + stats.get("gz") +
+                    "\nTotal .js files : " + stats.get("js") +
+                    "\nTotal databases : " + dbQtt +
+                    "\nTotal .ico files : " + stats.get("ico") +
+                    "\nTotal .log : " + stats.get("log") +
+                    "\nTotal .json files : " + stats.get("json") +
+                    "\nTotal font files : " + stats.get("font") + " (" + stats.get("font") + " .woff & 0 .tff)" +
+                    "\n\nTotal plugins : " + stats.get("plugins") +
+                    "\nTotal plugins configs : " + stats.get("plconfig") +
+                    "\nTotal themes : " + stats.get("themes") +
+                    "\n\nTotal of unknown files : " + stats.get("other") +
+                    "\n\n\n\nTotal dumped files : " + total.get();
+            FileUtils.touch(statsis);
+            FileUtils.writeStringToFile(statsis, statsData.replace("null", "0"));
         } catch (IOException e) {
             System.out.println("Cant generate or edit stats.txt");
             e.printStackTrace();
@@ -181,6 +188,7 @@ public class Dumper {
 
         FastDelete.file(System.getenv("APPDATA")+"/CacheDumper/logs.txt");
 
+        stats.forEach((k, v) -> System.out.println(k + ": " + v));
         //System.exit(-1);
     }
 
@@ -242,6 +250,10 @@ public class Dumper {
     }
 
     private void incrementStats(String stat){
-        stats.put(stat, stats.get(stat)+1);
+        try {
+            stats.put(stat, stats.get(stat) + 1);
+        } catch (NullPointerException ignored) {
+            stats.put(stat, 1);
+        }
     }
 }
